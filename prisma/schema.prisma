@@ -1,0 +1,155 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  firstName String   @map("first_name")
+  lastName  String   @map("last_name")
+  email     String   @unique
+  password  String
+  address   String   @db.Text
+  roleId    Int?
+  cart      Cart[]
+  orders    Order[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Role Role? @relation(fields: [roleId], references: [id])
+
+  @@map("users")
+}
+
+model Role {
+  id         Int              @id
+  name       String           @map("name")
+  user       User[]
+  permission PermissionRole[]
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+
+  @@map("roles")
+}
+
+model Permission {
+  id          Int              @id
+  name        String           @map("name")
+  permissions PermissionRole[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  @@map("permissions")
+}
+
+model PermissionRole {
+  roleId       Int
+  permissionId Int
+
+  Role       Role?       @relation(fields: [roleId], references: [id])
+  Permission Permission? @relation(fields: [permissionId], references: [id])
+
+  @@id([roleId, permissionId])
+  @@map("permission_roles")
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("categories")
+}
+
+model Product {
+  id            Int            @id @default(autoincrement())
+  name          String
+  quantity      Int
+  price         Float
+  description   String
+  isDeleted     Boolean        @default(false)
+  categoryId    Int?
+  productImages ProductImage[]
+  Cart          Cart[]
+  Order         OrderItem[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  Category Category? @relation(fields: [categoryId], references: [id])
+
+  @@map("products")
+}
+
+model ProductImage {
+  id        Int      @id @default(autoincrement())
+  imageUrl  String
+  productId Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Product Product? @relation(fields: [productId], references: [id])
+
+  @@map("product_images")
+}
+
+model Cart {
+  id        Int      @id @default(autoincrement())
+  userId    Int?
+  productId Int?
+  quantity  Int
+  total     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Product Product? @relation(fields: [productId], references: [id])
+  User    User?    @relation(fields: [userId], references: [id])
+}
+
+model Order {
+  id        Int         @id @default(autoincrement())
+  invoice   String      @unique
+  date      DateTime
+  total     Float
+  userId    Int?
+  status    Status
+  orderItem OrderItem[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  User User? @relation(fields: [userId], references: [id])
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id        Int      @id @default(autoincrement())
+  productId Int
+  orderId   Int
+  quantity  Int
+  price     Float
+  total     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Product Product @relation(fields: [productId], references: [id])
+  Order   Order   @relation(fields: [orderId], references: [id])
+
+  @@map("item_order")
+}
+
+enum Status {
+  WAITING_FOR_PAYMENT @map("waiting for payment")
+  PAID                @map("paid")
+  DELIVERED           @map("delivered")
+  COMPLETED           @map("completed")
+  CANCELLED           @map("cancelled")
+}
