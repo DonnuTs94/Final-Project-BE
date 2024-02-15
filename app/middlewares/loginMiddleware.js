@@ -3,38 +3,33 @@ import { findUser } from '../services/userServices.js';
 import bcrypt from 'bcrypt';
 
 export const validateLoginRequestBody = (req, res, next) => {
-  if (!req.body.email && !req.body.password) {
+  const { email, password } = req.body;
+
+  if (!email && !password) {
     return res.status(400).json({
       message: 'Please provide email and password',
     });
   }
 
-  if (!req.body.email) {
+  if (!email) {
     return res.status(400).json({
       message: 'Please provide an email',
     });
   }
 
-  if (!req.body.password) {
+  if (!password) {
     return res.status(400).json({
       message: 'Please provide password',
     });
   }
 
-  const { email, password } = req.body;
-
-  if (email) {
-    const emailPattern = REGEX_EMAIL;
-
-    if (emailPattern.test(email) === false) {
-      return res.status(400).json({
-        message: 'Please provide a valid email format',
-      });
-    }
+  if (REGEX_EMAIL.test(email) === false) {
+    return res.status(400).json({
+      message: 'Please provide a valid email format',
+    });
   }
 
-  const passwordPattern = REGEX_PASSWORD;
-  if (passwordPattern.test(password) === false) {
+  if (REGEX_PASSWORD.test(password) === false) {
     return res.status(400).json({
       message:
         'Password must contain at least 8 characters, alphanumeric, one uppercase letter, one lowercase letter and symbol',
