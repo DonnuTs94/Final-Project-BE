@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "npx nodemon --watch \" ./app/**/*.js\" --exec \"node server.js\"",
-    "migrate": "npx prisma migrate dev"
+    "migrate": "npx prisma migrate dev",
+    "seed": "node ./database/authorizationSeeder.js && node ./database/userSeeder.js && node ./database/categoriesSeeder.js"
   },
   "keywords": [],
   "author": "",
