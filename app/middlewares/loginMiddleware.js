@@ -1,3 +1,4 @@
+import { REGEX_EMAIL, REGEX_PASSWORD } from '../constants/regexValidator.js';
 import { findUser } from '../services/userServices.js';
 import bcrypt from 'bcrypt';
 
@@ -23,7 +24,7 @@ export const validateLoginRequestBody = (req, res, next) => {
   const { email, password } = req.body;
 
   if (email) {
-    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const emailPattern = REGEX_EMAIL;
 
     if (emailPattern.test(email) === false) {
       return res.status(400).json({
@@ -32,8 +33,7 @@ export const validateLoginRequestBody = (req, res, next) => {
     }
   }
 
-  const passwordPattern =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const passwordPattern = REGEX_PASSWORD;
   if (passwordPattern.test(password) === false) {
     return res.status(400).json({
       message:
