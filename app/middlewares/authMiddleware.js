@@ -1,7 +1,7 @@
-import pkg from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { verifyToken } from '../helpers/token.js';
 
-const { TokenExpiredError } = pkg;
+const { TokenExpiredError } = jwt;
 
 export const validateToken = (req, res, next) => {
   try {
