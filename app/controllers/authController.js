@@ -23,7 +23,7 @@ const authController = {
         })
       }
 
-      const token = createToken({ userId: user.id, roleId: user.roleId })
+      const token = createToken({ id: user.id, roleId: user.roleId })
 
       const userData = {
         id: user.id,
