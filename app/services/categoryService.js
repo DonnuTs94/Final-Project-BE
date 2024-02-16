@@ -26,10 +26,19 @@ const softDeleteCategory = async (id) => {
   })
 }
 
+const getCategoryById = async (id) => {
+  return await prisma.category.findFirst({
+    where: {
+      id: id
+    }
+  })
+}
+
 export {
   getAllCategories,
   createCategory,
   updateCategory,
   hardDeleteCategory,
-  softDeleteCategory
+  softDeleteCategory,
+  getCategoryById
 }
