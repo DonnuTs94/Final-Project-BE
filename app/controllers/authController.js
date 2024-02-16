@@ -23,7 +23,7 @@ const authController = {
         })
       }
 
-      const token = createToken({ userId: user.id, roleId: user.roleId })
+      const token = createToken({ id: user.id, roleId: user.roleId })
 
       const userData = {
         id: user.id,
@@ -39,6 +39,7 @@ const authController = {
         data: userData
       })
     } catch (err) {
+      console.log(err)
       res.status(500).json({
         message: "Internal Server Error"
       })

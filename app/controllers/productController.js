@@ -4,10 +4,17 @@ import { createDataProduct } from "../services/productService.js"
 
 const productController = {
   createProduct: async (req, res) => {
+    const { name, price, description, quantity, categoryId } = req.body
+
+    // if (!name || !quantity || !price || !description || !categoryId) {
+    //   res.status(400).json({
+    //     message: "Input must be filled!"
+    //   })
+    //   return
+    // }
+
     try {
       await prisma.$transaction(async () => {
-        const { name, price, description, quantity, categoryId } = req.body
-
         const files = req.files
         let imagePath = []
 
@@ -36,6 +43,7 @@ const productController = {
         message: "Success create new product"
       })
     } catch (err) {
+      console.log(err)
       return res.status(500).json({
         message: "Internal server error"
       })

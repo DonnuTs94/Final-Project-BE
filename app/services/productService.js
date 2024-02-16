@@ -12,4 +12,8 @@ const createDataProduct = async (name, quantity, price, description, categoryId)
   })
 }
 
-export { createDataProduct }
+const findProductbyId = async (id) => {
+  return await prisma.product.findUnique({ where: { id } })
+}
+
+export { createDataProduct, findProductbyId }

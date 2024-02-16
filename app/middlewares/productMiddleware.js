@@ -3,7 +3,7 @@ import { getCategoryById } from "../services/categoryService.js"
 const validateInputProduct = async (req, res, next) => {
   const { name, quantity, price, description, categoryId } = req.body
 
-  if (!name || !quantity || !price || !description || categoryId) {
+  if (name || quantity || price || description || categoryId) {
     return res.status(400).json({
       message: "Input must be filled!"
     })
@@ -11,6 +11,11 @@ const validateInputProduct = async (req, res, next) => {
 
   const findCategoryId = await getCategoryById(categoryId)
 
+  // if (isNaN(Number(findCategoryId))) {
+  //   return res.status(400).json({
+  //     message: "Category id must be a number"
+  //   })
+  // }
   if (!findCategoryId) {
     return res.status(400).json({
       message: "Category does'nt exist"

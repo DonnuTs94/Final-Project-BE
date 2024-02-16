@@ -2,11 +2,18 @@ import { Router } from "express"
 import productController from "../controllers/productController.js"
 import { validateFileUpload } from "../middlewares/ImageMiddleware.js"
 import { FILE_PREFIX, FILE_TYPES, PATH, SIZE_1MB } from "../constants/upload.js"
+import { validateToken } from "../middlewares/authMiddleware.js"
+import { validateInputProduct } from "../middlewares/productMiddleware.js"
+import { authorizationPermission } from "../middlewares/authorizationMiddleware.js"
+import { Permission } from "../constants/authorization.js"
 
 const router = Router()
 
 router.post(
   "/",
+  validateToken,
+  authorizationPermission(Permission.ADD_PRODUCT),
+  validateInputProduct,
   validateFileUpload({
     path: PATH,
     fileTypes: FILE_TYPES,
