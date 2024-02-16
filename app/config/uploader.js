@@ -1,6 +1,6 @@
 import multer from "multer"
 
-export const upload = ({
+const upload = ({
   filePrefix = "FILE",
   fileName = Date.now(),
   acceptedFileTypes = [],
@@ -15,7 +15,7 @@ export const upload = ({
     filename: (req, file, cb) => {
       const { originalname } = file
       fileName = originalname + Date.now()
-      cb(null, `${filePrefix}=${fileName}.${file.mimetype.split("/")[1]}`)
+      cb(null, `${filePrefix}-${fileName}.${file.mimetype.split("/")[1]}`)
     }
   })
 
@@ -25,12 +25,15 @@ export const upload = ({
     if (acceptedFileTypes.includes(extension)) {
       cb(null, true)
     } else {
-      cb(new Error("invalid file type"))
+      cb(new Error("Invalid file type"))
     }
   }
+
   return multer({
     storage: diskStorage,
     fileFilter,
     limits: { fileSize: maxSize }
-  })
+  }).any()
 }
+
+export { upload }
