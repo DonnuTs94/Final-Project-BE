@@ -6,9 +6,21 @@ const validateCartRequestBody = (req, res, next) => {
     })
   }
 
-  if (!quantity) {
+  if (isNaN(Number(productId))) {
+    return res.status(400).json({
+      message: "Product id must be a number"
+    })
+  }
+
+  if (!quantity && quantity !== 0) {
     return res.status(400).json({
       message: "Please provide quantity"
+    })
+  }
+
+  if (quantity <= 0) {
+    return res.status(400).json({
+      message: "Minimun Quantity is 1"
     })
   }
 
