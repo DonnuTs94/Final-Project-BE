@@ -4,9 +4,9 @@ import dotenv from "dotenv"
 dotenv.config()
 
 export const createToken = (userData) => {
-  const { userId, roleId } = userData
+  const { id, roleId } = userData
 
-  return jwt.sign({ userId, roleId }, process.env.JWT_SECRET, {
+  return jwt.sign({ id, roleId }, process.env.JWT_SECRET, {
     expiresIn: `${process.env.JWT_EXPIRES_IN}`
   })
 }
