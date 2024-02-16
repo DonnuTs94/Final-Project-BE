@@ -21,7 +21,7 @@ const cartsController = {
       }
 
       if (product.quantity < req.body.quantity) {
-        return res.status(400).json({ message: "Quantity not enough" })
+        return res.status(400).json({ message: "Product stock is not avaible" })
       }
       const { quantity, productId } = req.body
       const id = req.user.id
