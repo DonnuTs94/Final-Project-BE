@@ -13,7 +13,6 @@ const cartsController = {
   createCart: async (req, res) => {
     try {
       const id = req.user.id
-      console.log(id)
       const cart = req.body
       const newCart = await createCart(cart, id)
       res.status(201).json({ message: "Success Create Cart", data: newCart })
