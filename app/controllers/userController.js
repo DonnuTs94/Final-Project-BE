@@ -2,6 +2,9 @@ import { editUser } from "../services/userServices.js"
 import bcrypt from "bcrypt"
 import { findUserByEmail } from "../services/userServices.js"
 import { createUser } from "../services/userServices.js"
+import dotenv from "dotenv"
+
+dotenv.config()
 
 const userController = {
   updateUser: async (req, res) => {
@@ -24,11 +27,12 @@ const userController = {
     try {
       const { firstName, lastName, email, password, address } = req.body
       const userAlreadyExist = await findUserByEmail(email)
+      const BCRYPT_AROUND =process.env.BCRYPT_AROUND
 
       if (userAlreadyExist) {
         return res.status(400).json({ message: "User already exists" })
       }
-      const hashedPassword = bcrypt.hashSync(password, 10)
+      const hashedPassword = bcrypt.hashSync(password, BCRYPT_AROUND)
       const user = await createUser(firstName, lastName, email, hashedPassword, address)
       res.status(200).json({
         message: "Register Success",

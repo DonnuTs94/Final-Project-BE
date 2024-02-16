@@ -6,7 +6,7 @@ import userRoutes from "./routes/userRoutes.js"
 const router = Router()
 
 router.use("/auth", authRoutes)
-router.use("/auth", userRoutes)
+router.use("/user", userRoutes)
 router.use("/categories", categoryRoutes)
 
 export default router
