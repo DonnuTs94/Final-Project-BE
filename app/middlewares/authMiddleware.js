@@ -14,7 +14,6 @@ export const validateToken = (req, res, next) => {
     const token = req.headers.authorization.split(" ")[1]
 
     const userData = verifyToken(token)
-
     req.user = userData
     next()
   } catch (err) {

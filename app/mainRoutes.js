@@ -8,5 +8,6 @@ const router = Router()
 router.use("/auth", authRoutes)
 router.use("/user", userRoutes)
 router.use("/categories", categoryRoutes)
+router.use("/carts", cartRoutes)
 
 export default router
