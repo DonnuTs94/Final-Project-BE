@@ -10,39 +10,39 @@ const main = async () => {
   for (const role in Role) {
     await prisma.role.create({
       data: {
-        name: Role[role],
-      },
+        name: Role[role]
+      }
     })
   }
 
   for (const permission in Permission) {
     await prisma.permission.create({
       data: {
-        name: Permission[permission],
-      },
+        name: Permission[permission]
+      }
     })
   }
 
   for (const role in PermissionAssignment) {
     const roleRecord = await prisma.role.findFirst({
       where: {
-        name: role,
-      },
+        name: role
+      }
     })
 
     for (const permission of PermissionAssignment[role]) {
       const permissionRecord = await prisma.permission.findFirst({
         where: {
-          name: permission,
-        },
+          name: permission
+        }
       })
 
       if (roleRecord && permissionRecord) {
         await prisma.permissionRole.create({
           data: {
             roleId: Number(roleRecord.id),
-            permissionId: permissionRecord.id,
-          },
+            permissionId: permissionRecord.id
+          }
         })
       }
     }

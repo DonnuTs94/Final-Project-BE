@@ -1,10 +1,10 @@
-import { Router } from "express";
-import authRoutes from "./routes/authRoutes.js";
-import categoryRoutes from "./routes/categoryRouter.js";
+import { Router } from "express"
+import authRoutes from "./routes/authRoutes.js"
+import categoryRoutes from "./routes/categoryRouter.js"
 
-const router = Router();
+const router = Router()
 
-router.use("/auth", authRoutes);
-router.use("/categories", categoryRoutes);
+router.use("/auth", authRoutes)
+router.use("/categories", categoryRoutes)
 
-export default router;
+export default router
