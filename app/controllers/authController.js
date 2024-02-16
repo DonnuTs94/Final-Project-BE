@@ -40,8 +40,7 @@ const authController = {
       })
     } catch (err) {
       res.status(500).json({
-        message: "Internal Server Error",
-        error: err.message
+        message: "Internal Server Error"
       })
     }
   }

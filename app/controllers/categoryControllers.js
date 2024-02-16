@@ -11,8 +11,8 @@ const categoriesController = {
     try {
       const categories = await getAllCategories()
       res.status(200).json({ message: "Success Get All Categories", data: categories })
-    } catch (error) {
-      res.status(500).json({ message: "Failed Get All Categories", error: error })
+    } catch (err) {
+      res.status(500).json({ message: "Failed Get All Categories" })
     }
   },
 
@@ -21,8 +21,8 @@ const categoriesController = {
       const category = req.body
       const newCategory = await createCategory(category)
       res.status(201).json({ message: "Success Create Category", data: newCategory })
-    } catch (error) {
-      res.status(500).json({ message: "Failed Create Category", error: error })
+    } catch (err) {
+      res.status(500).json({ message: "Failed Create Category" })
     }
   },
 
@@ -32,8 +32,8 @@ const categoriesController = {
       const category = req.body
       const updatedCategory = await updateCategory(Number(id), category)
       res.status(200).json({ message: "Success Update Category", data: updatedCategory })
-    } catch (error) {
-      res.status(500).json({ message: "Failed Update Category", error: error })
+    } catch (err) {
+      res.status(500).json({ message: "Failed Update Category" })
     }
   },
 
@@ -42,7 +42,7 @@ const categoriesController = {
       const { id } = req.params
       await hardDeleteCategory(Number(id))
       res.status(200).json({ message: "Success Delete Category" })
-    } catch (error) {
+    } catch (err) {
       res.status(500).json({ message: "Failed Delete Category" })
     }
   },
@@ -54,7 +54,7 @@ const categoriesController = {
       res.status(200).json({
         message: "Success Soft Delete Category"
       })
-    } catch (error) {
+    } catch (err) {
       res.status(500).json({ message: "Failed Soft Delete Category" })
     }
   }
