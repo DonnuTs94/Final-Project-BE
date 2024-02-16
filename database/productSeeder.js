@@ -25,7 +25,7 @@ const main = async () => {
         price: 10.99 + i,
         description: `Description for Product ${i}`,
         quantity: 100,
-        categoryId: categoryId,
+        categoryId: categoryId
       }
       products.push(product)
     }
@@ -34,7 +34,7 @@ const main = async () => {
     const productIds = []
     for (const product of products) {
       const createdProduct = await prisma.product.create({
-        data: product,
+        data: product
       })
       productIds.push(createdProduct.id)
     }
@@ -45,13 +45,13 @@ const main = async () => {
         return [
           { imageUrl: `images/${productId}/1.jpg`, productId },
           { imageUrl: `images/${productId}/2.jpg`, productId },
-          { imageUrl: `images/${productId}/3.jpg`, productId },
+          { imageUrl: `images/${productId}/3.jpg`, productId }
         ]
       })
       .flat()
 
     await prisma.productImage.createMany({
-      data: productImagesData,
+      data: productImagesData
     })
 
     console.log("Products and product images created successfully.")
