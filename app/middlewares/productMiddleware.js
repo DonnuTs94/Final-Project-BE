@@ -9,19 +9,19 @@ const validateInputProduct = async (req, res, next) => {
     })
   }
 
-  if (isNaN(quantity)) {
+  if (isNaN(Number(quantity))) {
     return res.status(400).json({
       message: "Quantity must be a number"
     })
   }
 
-  if (isNaN(price)) {
+  if (isNaN(Number(price))) {
     return res.status(400).json({
       message: "Price must be a number"
     })
   }
 
-  if (isNaN(categoryId)) {
+  if (isNaN(Number(categoryId))) {
     return res.status(400).json({
       message: "Category id must be a number"
     })
