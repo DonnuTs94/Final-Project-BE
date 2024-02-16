@@ -1,6 +1,6 @@
 export const Role = {
   ADMIN: "admin",
-  USER: "user",
+  USER: "user"
 }
 
 export const Permission = {
@@ -23,7 +23,7 @@ export const Permission = {
 
   BROWSE_ORDERS: "browse_orders",
   READ_ORDER: "read_order",
-  ADD_ORDER: "add_order",
+  ADD_ORDER: "add_order"
 }
 
 export const PermissionAssignment = {
@@ -40,7 +40,7 @@ export const PermissionAssignment = {
     Permission.EDIT_CATEGORY,
     Permission.ADD_CATEGORY,
 
-    Permission.BROWSE_ORDERS,
+    Permission.BROWSE_ORDERS
   ],
 
   [Role.USER]: [
@@ -57,6 +57,6 @@ export const PermissionAssignment = {
 
     Permission.BROWSE_ORDERS,
     Permission.READ_ORDER,
-    Permission.ADD_ORDER,
-  ],
+    Permission.ADD_ORDER
+  ]
 }

@@ -3,7 +3,7 @@ const validateInputProduct = (req, res, next) => {
 
   if (!name || !quantity || !price || !description || categoryId) {
     return res.status(400).json({
-      message: "Input must be filled!",
+      message: "Input must be filled!"
     })
   }
 

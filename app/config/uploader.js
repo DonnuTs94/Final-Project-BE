@@ -5,7 +5,7 @@ export const upload = ({
   fileName = Date.now(),
   acceptedFileTypes = [],
   maxSize,
-  dynamicDestination,
+  dynamicDestination
 }) => {
   const diskStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -16,7 +16,7 @@ export const upload = ({
       const { originalname } = file
       fileName = originalname + Date.now()
       cb(null, `${filePrefix}=${fileName}.${file.mimetype.split("/")[1]}`)
-    },
+    }
   })
 
   const fileFilter = (req, file, cb) => {
@@ -31,6 +31,6 @@ export const upload = ({
   return multer({
     storage: diskStorage,
     fileFilter,
-    limits: { fileSize: maxSize },
+    limits: { fileSize: maxSize }
   })
 }
