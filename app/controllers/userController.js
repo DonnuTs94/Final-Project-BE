@@ -1,13 +1,13 @@
 import { editUser } from "../services/userServices.js";
 import bcrypt from "bcrypt";
-import { findUser } from "../services/userServices.js";
+import { findUserByEmail } from "../services/userServices.js";
 import { createUser } from "../services/userServices.js";
 
 const userController = {
   updateUser: async (req, res) => {
     try {
       const { firstName, lastName, address } = req.body;
-      const userId = req.user.userId;
+      const userId = req.user.id;
 
       const user = await editUser(userId, firstName, lastName, address);
       res.status(200).json({
@@ -24,7 +24,7 @@ const userController = {
   register: async (req, res) => {
     try {
       const { firstName, lastName, email, password, address } = req.body;
-      const userAlreadyExist = await findUser(email);
+      const userAlreadyExist = await findUserByEmail(email);
 
       if (userAlreadyExist) {
         return res.status(400).json({ message: "User already exists" });

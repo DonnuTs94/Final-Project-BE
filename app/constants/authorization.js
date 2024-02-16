@@ -1,6 +1,6 @@
 export const Role = {
   ADMIN: "admin",
-  USER: "user",
+  USER: "user"
 }
 
 export const Permission = {
@@ -23,5 +23,5 @@ export const Permission = {
 
   BROWSE_ORDERS: "browse_orders",
   READ_ORDER: "read_order",
-  ADD_ORDER: "add_order",
+  ADD_ORDER: "add_order"
 }

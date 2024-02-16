@@ -4,7 +4,7 @@ export const getUsers = async () => {
   return await prisma.user.findMany();
 };
 
-export const findUser = async (email) => {
+export const findUserByEmail = async (email) => {
   return await prisma.user.findFirst({
     where: {
       email,
@@ -34,6 +34,7 @@ export const editUser = async (userId, firstName, lastName, address) => {
   return await prisma.user.update({
     where: {
       id: userId,
+
     },
     data: {
       firstName,
