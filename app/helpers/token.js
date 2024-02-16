@@ -10,7 +10,7 @@ export const createToken = (userData) => {
     throw new Error("UserId and roleId must be a number")
   }
   return jwt.sign({ userId, roleId }, process.env.JWT_SECRET, {
-    expiresIn: `${process.env.JWT_EXPIRES_IN}`,
+    expiresIn: `${process.env.JWT_EXPIRES_IN}`
   })
 }
 

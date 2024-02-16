@@ -27,7 +27,7 @@ const main = async () => {
         firstName: "Admin",
         lastName: "User",
         address: "Admin Address",
-        roleId: await getRoleId("admin"),
+        roleId: await getRoleId("admin")
       },
       // Regular users
       {
@@ -36,7 +36,7 @@ const main = async () => {
         firstName: "Regular",
         lastName: "User 1",
         address: "User Address 1",
-        roleId: await getRoleId("user"),
+        roleId: await getRoleId("user")
       },
       {
         email: "user2@example.com",
@@ -44,7 +44,7 @@ const main = async () => {
         firstName: "Regular",
         lastName: "User 2",
         address: "User Address 2",
-        roleId: await getRoleId("user"),
+        roleId: await getRoleId("user")
       },
       {
         email: "user3@example.com",
@@ -52,7 +52,7 @@ const main = async () => {
         firstName: "Regular",
         lastName: "User 3",
         address: "User Address 3",
-        roleId: await getRoleId("user"),
+        roleId: await getRoleId("user")
       },
       {
         email: "user4@example.com",
@@ -60,7 +60,7 @@ const main = async () => {
         firstName: "Regular",
         lastName: "User 4",
         address: "User Address 4",
-        roleId: await getRoleId("user"),
+        roleId: await getRoleId("user")
       },
       {
         email: "user5@example.com",
@@ -68,8 +68,8 @@ const main = async () => {
         firstName: "Regular",
         lastName: "User 5",
         address: "User Address 5",
-        roleId: await getRoleId("user"),
-      },
+        roleId: await getRoleId("user")
+      }
     ]
 
     await prisma.user.createMany({ data: users })

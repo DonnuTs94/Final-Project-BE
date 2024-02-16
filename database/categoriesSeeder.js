@@ -9,8 +9,8 @@ const main = async () => {
     for (const categoryName of categories) {
       await prisma.category.create({
         data: {
-          name: categoryName,
-        },
+          name: categoryName
+        }
       })
       console.log(`Category "${categoryName}" created successfully.`)
     }
