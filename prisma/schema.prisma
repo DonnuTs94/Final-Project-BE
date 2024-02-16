@@ -63,6 +63,7 @@ model PermissionRole {
 model Category {
   id        Int       @id @default(autoincrement())
   name      String    @unique
+  isDeleted Boolean @default(false)
   products  Product[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
