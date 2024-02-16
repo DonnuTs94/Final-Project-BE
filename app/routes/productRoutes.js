@@ -13,13 +13,13 @@ router.post(
   "/",
   validateToken,
   authorizationPermission(Permission.ADD_PRODUCT),
-  validateInputProduct,
   validateFileUpload({
     path: PATH,
     fileTypes: FILE_TYPES,
     filePrefix: FILE_PREFIX,
     imgSize: SIZE_1MB
   }),
+  validateInputProduct,
   productController.createProduct
 )
 
