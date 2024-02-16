@@ -15,7 +15,6 @@ const userController = {
         user
       })
     } catch (err) {
-      console.log(err)
       res.status(500).json({
         message: "Internal Server Error"
       })
@@ -36,10 +35,8 @@ const userController = {
         user
       })
     } catch (err) {
-      console.log(err)
       res.status(500).json({
         message: "Internal Server Error",
-        error: err.message
       })
     }
   }
