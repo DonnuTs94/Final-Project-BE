@@ -15,7 +15,9 @@ const authController = {
         })
       }
 
-      if (!(await bcrypt.compare(password, user.password))) {
+      const passwordIsValid = bcrypt.compareSync(password, user.password)
+
+      if (!passwordIsValid) {
         return res.status(401).json({
           message: "Wrong password"
         })
@@ -23,9 +25,18 @@ const authController = {
 
       const token = createToken({ userId: user.id, roleId: user.roleId })
 
+      const userData = {
+        id: user.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        address: user.address
+      }
+
       res.status(200).json({
         message: "Login Success",
-        token
+        token,
+        data: userData
       })
     } catch (err) {
       res.status(500).json({
