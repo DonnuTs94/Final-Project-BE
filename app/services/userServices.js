@@ -1,13 +1,13 @@
 import { prisma } from "../config/prisma.js"
-
-export const getUsers = async () => {
+const getUsers = async () => {
   return await prisma.user.findMany()
 }
-
-export const findUser = async (email) => {
+const findUserByEmail = async (email) => {
   return await prisma.user.findFirst({
     where: {
       email
     }
   })
 }
+
+export { getUsers, findUserByEmail }
