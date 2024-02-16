@@ -4,6 +4,17 @@ import { findProductbyId } from "./productService.js"
 const getCartbyUserId = async (userId) => {
   return await prisma.cart.findMany({ where: { userId } })
 }
+const getCartbyUserIdAndProductId = async (userId, productId) => {
+  return await prisma.cart.findFirst({
+    where: {
+      userId,
+      productId
+    },
+    include: {
+      Product: true
+    }
+  })
+}
 
 const createCart = async ({ quantity, productId }, userId) => {
   const product = await findProductbyId(productId)
@@ -23,4 +34,16 @@ const createCart = async ({ quantity, productId }, userId) => {
   })
 }
 
-export { getCartbyUserId, createCart }
+const updateCartQuantity = async (cartId, quantity,total) => {
+  return await prisma.cart.update({
+    where: {
+      id : cartId
+    },
+      data:{
+      quantity,
+      total
+    }
+  })
+}
+
+export { getCartbyUserId, createCart, updateCartQuantity , getCartbyUserIdAndProductId}

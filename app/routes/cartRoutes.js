@@ -22,4 +22,6 @@ router.post(
   cartControllers.createCart
 )
 
+router.put("/update", validateToken,authorizationPermission(Permission.EDIT_CART), validateCartRequestBody, cartControllers.updateCart )
+
 export default router
