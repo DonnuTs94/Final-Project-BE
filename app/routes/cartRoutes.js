@@ -3,6 +3,7 @@ import cartControllers from "../controllers/cartControllers.js"
 import { validateToken } from "../middlewares/authMiddleware.js"
 import { authorizationPermission } from "../middlewares/authorizationMiddleware.js"
 import { Permission } from "../constants/authorization.js"
+import { validateCartRequestBody } from "../middlewares/cartMiddleware.js"
 
 const router = express.Router()
 
@@ -17,6 +18,7 @@ router.post(
   "/create",
   validateToken,
   authorizationPermission(Permission.ADD_CART),
+  validateCartRequestBody,
   cartControllers.createCart
 )
 
