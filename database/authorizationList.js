@@ -1,9 +1,11 @@
 export const Role = {
   ADMIN: "admin",
   USER: "user",
-}
+};
 
 export const Permission = {
+  EDIT_USER: "edit_user",
+
   BROWSE_PRODUCTS: "browse_products",
   READ_PRODUCT: "read_product",
   EDIT_PRODUCT: "edit_product",
@@ -24,7 +26,7 @@ export const Permission = {
   BROWSE_ORDERS: "browse_orders",
   READ_ORDER: "read_order",
   ADD_ORDER: "add_order",
-}
+};
 
 export const PermissionAssignment = {
   [Role.ADMIN]: [
@@ -44,6 +46,8 @@ export const PermissionAssignment = {
   ],
 
   [Role.USER]: [
+    Permission.EDIT_USER,
+
     Permission.BROWSE_PRODUCTS,
     Permission.READ_PRODUCT,
 
@@ -59,4 +63,4 @@ export const PermissionAssignment = {
     Permission.READ_ORDER,
     Permission.ADD_ORDER,
   ],
-}
+};
