@@ -27,7 +27,7 @@ const userController = {
     try {
       const { firstName, lastName, email, password, address } = req.body
       const userAlreadyExist = await findUserByEmail(email)
-      const BCRYPT_AROUND =process.env.BCRYPT_AROUND
+      const BCRYPT_AROUND = process.env.BCRYPT_AROUND
 
       if (userAlreadyExist) {
         return res.status(400).json({ message: "User already exists" })
@@ -40,7 +40,7 @@ const userController = {
       })
     } catch (err) {
       res.status(500).json({
-        message: "Internal Server Error",
+        message: "Internal Server Error"
       })
     }
   }
