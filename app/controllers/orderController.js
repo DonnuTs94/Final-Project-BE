@@ -1,5 +1,9 @@
-import { prisma } from "../config/prisma.js"
-import { createOrderTransaction } from "../services/orderServices.js"
+import {
+  createOrderTransaction,
+  getOrdersByUserId,
+  getAllAdminOrders
+} from "../services/orderServices.js"
+
 import { getCartsByCartIdUserId } from "../services/cartService.js"
 
 const orderController = {
@@ -38,6 +42,45 @@ const orderController = {
       res.status(201).json({
         message: "Success Create Order",
         data: newOrder
+      })
+    } catch (err) {
+      res.status(500).json({
+        message: "Internal Server Error"
+      })
+      console.log(err)
+    }
+  },
+
+  getOrdersByUserId: async (req, res) => {
+    try {
+      const userId = req.user.id
+      const orderBy = { date: "desc" }
+
+      const orders = await getOrdersByUserId(userId, orderBy)
+
+      res.status(200).json({
+        message: "Success Get Orders by User ID and Order By Date",
+        data: orders
+      })
+    } catch (err) {
+      res.status(500).json({
+        message: "Internal Server Error"
+      })
+      console.log(err)
+    }
+  },
+
+  getAllAdminOrders: async (req, res) => {
+    try {
+      const { page = 1, pageSize = 10 } = req.query
+      const skip = (page - 1) * pageSize
+      const take = parseInt(pageSize)
+
+      const orders = await getAllAdminOrders({ skip, take })
+
+      res.status(200).json({
+        message: "Success Get All Admin Orders",
+        data: orders
       })
     } catch (err) {
       res.status(500).json({

@@ -67,4 +67,25 @@ const createOrderTransaction = async (selectedCarts, userId) => {
   })
 }
 
-export { getOrders, createOrderTransaction }
+const getOrdersByUserId = async (userId) => {
+  return await prisma.order.findMany({
+    where: {
+      userId
+    },
+    orderBy: {
+      date: "desc"
+    }
+  })
+}
+
+const getAllAdminOrders = async ({ skip = 0, take = 10 }) => {
+  return await prisma.order.findMany({
+    orderBy: {
+      date: "desc"
+    },
+    skip,
+    take
+  })
+}
+
+export { getOrders, createOrderTransaction, getOrdersByUserId, getAllAdminOrders }

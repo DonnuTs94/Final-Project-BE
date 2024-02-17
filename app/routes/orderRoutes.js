@@ -15,4 +15,18 @@ router.post(
   orderController.createOrder
 )
 
+router.get(
+  "/users",
+  validateToken,
+  authorizationPermission(Permission.BROWSE_ORDERS),
+  orderController.getOrdersByUserId
+)
+
+router.get(
+  "/admin",
+  validateToken,
+  authorizationPermission(Permission.ADMIN_BROWSE_ORDERS),
+  orderController.getAllAdminOrders
+)
+
 export default router

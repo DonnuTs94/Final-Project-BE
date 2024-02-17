@@ -25,7 +25,8 @@ export const Permission = {
 
   BROWSE_ORDERS: "browse_orders",
   READ_ORDER: "read_order",
-  ADD_ORDER: "add_order"
+  ADD_ORDER: "add_order",
+  ADMIN_BROWSE_ORDERS: "admin_browse_orders"
 }
 
 export const PermissionAssignment = {
@@ -42,7 +43,7 @@ export const PermissionAssignment = {
     Permission.EDIT_CATEGORY,
     Permission.ADD_CATEGORY,
 
-    Permission.BROWSE_ORDERS
+    Permission.ADMIN_BROWSE_ORDERS
   ],
 
   [Role.USER]: [
