@@ -1,5 +1,5 @@
 import { prisma } from "../config/prisma.js"
-import { ORDER_STATUS } from "../constants/orderStatus.js"
+import { ORDER_STATUS } from "../constants/order.js"
 
 const getOrders = async () => {
   return await prisma.order.findMany()
