@@ -1,7 +1,6 @@
 export const ORDER_STATUS = {
-  WAITING_FOR_PAYMENT: "waiting for payment",
-  PAID: "paid",
-  DELIVERED: "delivered",
-  COMPLETED: "completed",
-  CANCELLED: "cancelled"
+  WAITING_FOR_PAYMENT: "WAITING_FOR_PAYMENT",
+  PAID: "PAID",
+  DELIVERED: "DELIVERED",
+  COMPLETED: "COMPLETED"
 }
