@@ -1,7 +1,7 @@
 import { prisma } from "../config/prisma.js"
-import { findProductbyId } from "./productService.js"
+import { findProductById } from "./productService.js"
 
-const getCartbyUserId = async (userId) => {
+const getCartByUserId = async (userId) => {
   return await prisma.cart.findMany({ where: { userId } })
 }
 const getCartbyUserIdAndProductId = async (userId, productId) => {
@@ -16,8 +16,22 @@ const getCartbyUserIdAndProductId = async (userId, productId) => {
   })
 }
 
+const getCartsByCartIdUserId = async (cartId, userId) => {
+  return await prisma.cart.findMany({
+    where: {
+      id: {
+        in: cartId
+      },
+      userId
+    },
+    include: {
+      Product: true
+    }
+  })
+}
+
 const createCart = async ({ quantity, productId }, userId) => {
-  const product = await findProductbyId(productId)
+  const product = await findProductById(productId)
 
   if (!product) {
     throw new Error("Product not found")
@@ -57,6 +71,7 @@ const createCart = async ({ quantity, productId }, userId) => {
   }
 }
 
+<<<<<<< HEAD
 const updateCartQuantity = async (cartId, quantity, total) => {
   return await prisma.cart.update({
     where: {
@@ -84,3 +99,6 @@ export {
   getCartbyUserIdAndProductId,
   deleteItemInCart
 }
+=======
+export { getCartByUserId, getCartsByCartIdUserId, createCart }
+>>>>>>> 770109d37987150277df106e98b62427849fe60b

@@ -8,10 +8,10 @@ import {
 import { findProductbyId } from "../services/productService.js"
 
 const cartsController = {
-  getCartbyUserId: async (req, res) => {
+  getCartByUserId: async (req, res) => {
     try {
       const id = req.user.id
-      const cart = await getCartbyUserId(id)
+      const cart = await getCartByUserId(id)
       res.status(200).json({ message: "Success Get Cart", data: cart })
     } catch (err) {
       res.status(500).json({ message: "Failed Get Cart" })
@@ -20,7 +20,7 @@ const cartsController = {
 
   createCart: async (req, res) => {
     try {
-      const product = await findProductbyId(req.body.productId)
+      const product = await findProductById(req.body.productId)
 
       if (!product) {
         return res.status(400).json({ message: "Product not found" })
