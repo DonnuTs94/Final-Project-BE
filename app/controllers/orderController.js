@@ -5,11 +5,13 @@ import {
 } from "../services/orderServices.js"
 
 import { getCartsByCartIdUserId } from "../services/cartService.js"
+import { createcors } from "../api/rajaOngkir.js"
+import { ORDER_SHIPPING } from "../constants/order.js"
 
 const orderController = {
   createOrder: async (req, res) => {
     try {
-      const { cartId } = req.body
+      const { cartId, destination, weight, shippingOption } = req.body
       const userId = req.user.id
 
       const selectedCarts = await getCartsByCartIdUserId(cartId, userId)
@@ -37,7 +39,25 @@ const orderController = {
         })
       }
 
-      const newOrder = await createOrderTransaction(selectedCarts, userId)
+      const ongkirDetail = await createcors(
+        ORDER_SHIPPING.ORDER_ORIGIN,
+        destination,
+        weight,
+        ORDER_SHIPPING.ORDER_COURIER
+      )
+
+      const selectedService = ongkirDetail[0].costs.filter(
+        (cost) => cost.service === shippingOption
+      )[0]
+
+      const totalOngkir = selectedService.cost[0].value
+
+      const newOrder = await createOrderTransaction(
+        selectedCarts,
+        destination,
+        totalOngkir,
+        userId
+      )
 
       res.status(201).json({
         message: "Success Create Order",

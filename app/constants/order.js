@@ -4,3 +4,8 @@ export const ORDER_STATUS = {
   DELIVERED: "DELIVERED",
   COMPLETED: "COMPLETED"
 }
+
+export const ORDER_SHIPPING = {
+  ORDER_ORIGIN: 501,
+  ORDER_COURIER: "jne"
+}
