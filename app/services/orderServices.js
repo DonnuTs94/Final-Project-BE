@@ -16,7 +16,7 @@ const createOrderTransaction = async (selectedCarts, userId) => {
     ordersData.sort((a, b) => b.id - a.id)
 
     const lastOrderId = ordersData[0].id
-    invoiceNumber = String(lastOrderId + 1)
+    invoiceNumber = lastOrderId + 1
   }
 
   const totalOrder = selectedCarts.reduce((total, cart) => {
@@ -26,7 +26,7 @@ const createOrderTransaction = async (selectedCarts, userId) => {
   return await prisma.$transaction(async (tx) => {
     const order = await tx.order.create({
       data: {
-        invoice: invoiceNumber,
+        invoice: String(invoiceNumber),
         date: new Date(),
         userId: userId,
         total: totalOrder,
@@ -53,6 +53,15 @@ const createOrderTransaction = async (selectedCarts, userId) => {
     if (!orderItems) {
       throw new Error("Failed to create order items")
     }
+
+    await tx.cart.deleteMany({
+      where: {
+        userId,
+        id: {
+          in: selectedCarts.map((cart) => cart.id)
+        }
+      }
+    })
 
     return order
   })
