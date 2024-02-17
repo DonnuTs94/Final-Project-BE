@@ -1,3 +1,5 @@
+import { findProductbyId } from "../services/productService.js"
+
 const validateCartRequestBody = (req, res, next) => {
   const { productId, quantity } = req.body
   if (!productId) {
@@ -32,11 +34,10 @@ const validateCartRequestQuantityBody = (req, res, next) => {
 
   if (!quantity) {
     return res.status(400).json({
-      message: "Please provide quantity format number"
+      message: "Please provide quantity"
     })
   }
-
   next()
 }
 
-export { validateCartRequestBody }
+export { validateCartRequestBody, validateCartRequestQuantityBody }

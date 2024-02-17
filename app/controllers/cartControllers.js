@@ -1,4 +1,10 @@
-import { getCartbyUserId, createCart, updateCartQuantity, getCartbyUserIdAndProductId } from "../services/cartService.js"
+import {
+  getCartbyUserId,
+  createCart,
+  updateCartQuantity,
+  getCartbyUserIdAndProductId,
+  deleteItemInCart
+} from "../services/cartService.js"
 import { findProductbyId } from "../services/productService.js"
 
 const cartsController = {
@@ -31,20 +37,33 @@ const cartsController = {
       res.status(500).json({ message: "Failed Create Cart" })
     }
   },
-  updateCart:async (req,res) => {
+  updateCart: async (req, res) => {
     try {
       const userId = req.user.id
-      const { productId ,quantity } = req.body
+      const product = await findProductbyId(req.body.productId)
+      const { productId, quantity } = req.body
       const productExistInCart = await getCartbyUserIdAndProductId(userId, productId)
-      if(!productExistInCart) {
-        return res.status(400).json({message: "Products doesn't exist in cart"})
+      if (!productExistInCart) {
+        return res.status(400).json({ message: "Products doesn't exist in cart" })
       }
-      const totalAmount = (Number(quantity) * productExistInCart.Product.price)
+      if (req.body.quantity >= product.quantity) {
+        return res.status(400).json({ message: "Product stock is not avaible" })
+      }
+      const totalAmount = Number(quantity) * productExistInCart.Product.price
       const cartId = productExistInCart.id
-      const cartUpdate = await updateCartQuantity(cartId, quantity,totalAmount)
-      res.status(201).json({message : "Success update quantity cart", data: cartUpdate})
+      const cartUpdate = await updateCartQuantity(cartId, quantity, totalAmount)
+      res.status(201).json({ message: "Success update quantity cart", data: cartUpdate })
     } catch (err) {
       res.status(500).json({ message: "Failed update Cart" })
+    }
+  },
+  deleteItemInCart: async (req, res) => {
+    try {
+      const { id } = req.params
+      await deleteItemInCart(Number(id))
+      res.status(200).json({ message: "Success Delete Category" })
+    } catch (err) {
+      res.status(500).json({ message: "Failed delete item in Cart" })
     }
   }
 }

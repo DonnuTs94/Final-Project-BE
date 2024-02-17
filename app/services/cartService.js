@@ -34,16 +34,30 @@ const createCart = async ({ quantity, productId }, userId) => {
   })
 }
 
-const updateCartQuantity = async (cartId, quantity,total) => {
+const updateCartQuantity = async (cartId, quantity, total) => {
   return await prisma.cart.update({
     where: {
-      id : cartId
+      id: cartId
     },
-      data:{
+    data: {
       quantity,
       total
     }
   })
 }
 
-export { getCartbyUserId, createCart, updateCartQuantity , getCartbyUserIdAndProductId}
+const deleteItemInCart = async (id) => {
+  return await prisma.cart.delete({
+    where: {
+      id
+    }
+  })
+}
+
+export {
+  getCartbyUserId,
+  createCart,
+  updateCartQuantity,
+  getCartbyUserIdAndProductId,
+  deleteItemInCart
+}
