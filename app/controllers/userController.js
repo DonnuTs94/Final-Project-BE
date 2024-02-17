@@ -37,7 +37,6 @@ const userController = {
       const userId = await getRoleId(Role.USER)
       const roleId = Number(userId.id)
       const hashedPassword = bcrypt.hashSync(password, Number(BCRYPT_AROUND))
-      console.log(roleId)
       const user = await createUser(
         firstName,
         lastName,
@@ -51,7 +50,6 @@ const userController = {
         user
       })
     } catch (err) {
-      console.log(err)
       res.status(500).json({
         message: "Internal Server Error"
       })
