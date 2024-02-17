@@ -22,6 +22,17 @@ const orderController = {
         })
       }
 
+      const outOfStockItems = selectedCarts.filter(
+        (cart) => cart.quantity > cart.Product.quantity
+      )
+
+      if (outOfStockItems.length > 0) {
+        const outStockId = outOfStockItems.map((cart) => cart.Product.id).join(", ")
+        return res.status(400).json({
+          message: `Product ID: ${outStockId} is out of stock`
+        })
+      }
+
       const newOrder = await createOrderTransaction(selectedCarts, userId)
 
       res.status(201).json({
