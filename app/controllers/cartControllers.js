@@ -27,8 +27,9 @@ const cartsController = {
       }
 
       if (product.quantity < req.body.quantity) {
-        return res.status(400).json({ message: "Product stock is not avaible" })
+        return res.status(400).json({ message: "Product stock is not available" })
       }
+
       const { quantity, productId } = req.body
       const id = req.user.id
       const cart = await createCart({ quantity, productId }, id)
