@@ -1,4 +1,4 @@
-import { getShippingCostByCity } from "../api/rajaOngkir.js"
+import { getCityById } from "../api/rajaOngkir.js"
 import { prisma } from "../config/prisma.js"
 import { ORDER_STATUS } from "../constants/order.js"
 
@@ -25,7 +25,7 @@ const createOrderTransaction = async (
     invoiceNumber = lastOrderId + 1
   }
 
-  const destinationCity = await getShippingCostByCity(destination)
+  const destinationCity = await getCityById(destination)
 
   const totalOrder = selectedCarts.reduce((total, cart) => {
     return total + cart.total
@@ -67,6 +67,12 @@ const createOrderTransaction = async (
       throw new Error("Failed to create order items")
     }
 
+    const orderItemsList = await tx.orderItem.findMany({
+      where: {
+        orderId: order.id
+      }
+    })
+
     await tx.cart.deleteMany({
       where: {
         userId,
@@ -76,7 +82,7 @@ const createOrderTransaction = async (
       }
     })
 
-    return { ...order, destination: destinationCity, orderItems }
+    return { ...order, destination: destinationCity, orderItemsList }
   })
 }
 
