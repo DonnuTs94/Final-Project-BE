@@ -21,20 +21,43 @@ const getCartsByCartIdUserId = async (cartId, userId) => {
 
 const createCart = async ({ quantity, productId }, userId) => {
   const product = await findProductbyId(productId)
-  const total = quantity * product.price
 
   if (!product) {
     throw new Error("Product not found")
   }
 
-  return await prisma.cart.create({
-    data: {
+  const existingCart = await prisma.cart.findFirst({
+    where: {
       userId,
-      quantity,
-      total,
       productId
     }
   })
+
+  if (existingCart) {
+    const updatedQuantity = existingCart.quantity + quantity
+    const total = updatedQuantity * product.price
+
+    return await prisma.cart.update({
+      where: {
+        id: existingCart.id
+      },
+      data: {
+        quantity: updatedQuantity,
+        total
+      }
+    })
+  } else {
+    const total = quantity * product.price
+
+    return await prisma.cart.create({
+      data: {
+        userId,
+        quantity,
+        total,
+        productId
+      }
+    })
+  }
 }
 
 export { getCartbyUserId, getCartsByCartIdUserId, createCart }
