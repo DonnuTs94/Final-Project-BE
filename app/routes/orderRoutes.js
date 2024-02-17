@@ -26,6 +26,7 @@ router.get(
   "/admin",
   validateToken,
   authorizationPermission(Permission.ADMIN_BROWSE_ORDERS),
+  validateInputOrder,
   orderController.getAllAdminOrders
 )
 

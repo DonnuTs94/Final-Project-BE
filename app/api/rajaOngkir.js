@@ -34,21 +34,41 @@ const getShippingCostByCity = async (provinceId) => {
 
 const createcors = async (origin, destination, weight, courier) => {
   try {
-    const response = await axios.post(`https://api.rajaongkir.com/starter/cost`, { 
-      origin,
-      destination,
-      weight,
-      courier
-    }, {
-      headers: {
-        key: process.env.RAJAONGKIR_API_KEY
+    const response = await axios.post(
+      `https://api.rajaongkir.com/starter/cost`,
+      {
+        origin,
+        destination,
+        weight,
+        courier
+      },
+      {
+        headers: {
+          key: process.env.RAJAONGKIR_API_KEY
+        }
       }
-    });
-    return response.data.rajaongkir.results;
+    )
+    return response.data.rajaongkir.results
   } catch (error) {
-    throw new Error("Failed to get shipping cost");
+    throw new Error("Failed to get shipping cost")
   }
 }
 
+const getCityById = async (cityId) => {
+  try {
+    const response = await axios.get(
+      `https://api.rajaongkir.com/starter/city?id=${cityId}`,
+      {
+        headers: {
+          key: process.env.RAJAONGKIR_API_KEY
+        }
+      }
+    )
+    const city = response.data.rajaongkir.results
+    return city
+  } catch (error) {
+    throw new Error("Failed to get shipping cost by city")
+  }
+}
 
-export { getShippingCostByProvince, getShippingCostByCity, createcors }
+export { getShippingCostByProvince, getShippingCostByCity, createcors, getCityById }

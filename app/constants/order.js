@@ -7,3 +7,8 @@ export const ORDER_STATUS = {
 }
 
 export const ADD_1H = 1
+
+export const ORDER_SHIPPING = {
+  ORDER_ORIGIN: 501,
+  ORDER_COURIER: "jne"
+}
