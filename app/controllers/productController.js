@@ -51,7 +51,7 @@ const productController = {
 
       const pageNumber = page ? parseInt(page, 10) : 1
 
-      if (isNaN(pageNumber) || pageNumber < 1) {
+      if (isNaN(Number(pageNumber)) || Number(pageNumber) < 1) {
         return res.status(400).json({
           message: "Invalid page number: Page must be a positive integer"
         })
