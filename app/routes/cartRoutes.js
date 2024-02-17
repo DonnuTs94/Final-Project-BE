@@ -11,7 +11,7 @@ router.get(
   "/",
   validateToken,
   authorizationPermission(Permission.BROWSE_CARTS),
-  cartControllers.getCartbyUserId
+  cartControllers.getCartByUserId
 )
 
 router.post(

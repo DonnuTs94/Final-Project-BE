@@ -1,7 +1,7 @@
 import { prisma } from "../config/prisma.js"
-import { findProductbyId } from "./productService.js"
+import { findProductById } from "./productService.js"
 
-const getCartbyUserId = async (userId) => {
+const getCartByUserId = async (userId) => {
   return await prisma.cart.findMany({ where: { userId } })
 }
 
@@ -20,7 +20,7 @@ const getCartsByCartIdUserId = async (cartId, userId) => {
 }
 
 const createCart = async ({ quantity, productId }, userId) => {
-  const product = await findProductbyId(productId)
+  const product = await findProductById(productId)
 
   if (!product) {
     throw new Error("Product not found")
@@ -60,4 +60,4 @@ const createCart = async ({ quantity, productId }, userId) => {
   }
 }
 
-export { getCartbyUserId, getCartsByCartIdUserId, createCart }
+export { getCartByUserId, getCartsByCartIdUserId, createCart }

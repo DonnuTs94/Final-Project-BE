@@ -4,7 +4,7 @@ import {
   countProductData,
   createDataProduct,
   findAllProduct,
-  findProductbyId,
+  findProductById,
   softDeleteProduct
 } from "../services/productService.js"
 
@@ -87,7 +87,7 @@ const productController = {
     try {
       const { id } = req.params
 
-      const product = await findProductbyId(Number(id))
+      const product = await findProductById(Number(id))
 
       if (!product) {
         return res.status(404).json({
@@ -110,7 +110,7 @@ const productController = {
     try {
       const { id } = req.params
 
-      const isProductExist = await findProductbyId(Number(id))
+      const isProductExist = await findProductById(Number(id))
 
       if (!isProductExist) {
         return res.status(404).json({
