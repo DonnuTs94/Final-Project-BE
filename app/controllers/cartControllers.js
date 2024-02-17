@@ -47,7 +47,7 @@ const cartsController = {
       if (!productExistInCart) {
         return res.status(400).json({ message: "Products doesn't exist in cart" })
       }
-      if (product >= product.quantity) {
+      if (quantity >= product.quantity) {
         return res.status(400).json({ message: "Product stock is not available" })
       }
       const totalAmount = Number(quantity) * productExistInCart.Product.price
@@ -61,7 +61,7 @@ const cartsController = {
   deleteItemInCart: async (req, res) => {
     try {
       const { id } = req.params
-      if (isNaN(id)) {
+      if (isNaN(Number(id))) {
         return res.status(400).json({ message: "Invalid ID parameter" })
       }
       const itemId = Number(id)
