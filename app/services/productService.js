@@ -37,6 +37,9 @@ const findAllProduct = async (product, category, pageSize, offset) => {
           imageUrl: true
         }
       }
+    },
+    orderBy: {
+      name: "asc"
     }
   })
 }
