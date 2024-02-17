@@ -3,7 +3,9 @@ import { createMultipleImages } from "../services/productImageService.js"
 import {
   countProductData,
   createDataProduct,
-  findAllProduct
+  findAllProduct,
+  findProductbyId,
+  softDeleteProduct
 } from "../services/productService.js"
 
 const productController = {
@@ -77,6 +79,52 @@ const productController = {
       })
     } catch (err) {
       return res.status(500).json({
+        message: "Internal server error"
+      })
+    }
+  },
+  getProductById: async (req, res) => {
+    try {
+      const { id } = req.params
+
+      const product = await findProductbyId(Number(id))
+
+      if (!product) {
+        return res.status(404).json({
+          message: "Product not found"
+        })
+      }
+
+      res.json({
+        message: "Success get product data!",
+        data: product
+      })
+    } catch (err) {
+      res.status(500).json({
+        message: "Internal server error"
+      })
+    }
+  },
+
+  softDeleteProduct: async (req, res) => {
+    try {
+      const { id } = req.params
+
+      const isProductExist = await findProductbyId(Number(id))
+
+      if (!isProductExist) {
+        return res.status(404).json({
+          message: "Product not found"
+        })
+      }
+
+      await softDeleteProduct(Number(id))
+
+      res.json({
+        message: "Success soft delete product data!"
+      })
+    } catch (err) {
+      res.status(500).json({
         message: "Internal server error"
       })
     }
