@@ -61,7 +61,11 @@ const cartsController = {
   deleteItemInCart: async (req, res) => {
     try {
       const { id } = req.params
-      await deleteItemInCart(Number(id))
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid ID parameter" })
+      }
+      const itemId = Number(id)
+      await deleteItemInCart(itemId)
       res.status(200).json({ message: "Success Delete Category" })
     } catch (err) {
       res.status(500).json({ message: "Failed delete item in Cart" })
