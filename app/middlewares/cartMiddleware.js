@@ -29,15 +29,4 @@ const validateCartRequestBody = (req, res, next) => {
   next()
 }
 
-const validateCartRequestQuantityBody = (req, res, next) => {
-  const { quantity } = req.body
-
-  if (!quantity) {
-    return res.status(400).json({
-      message: "Please provide quantity"
-    })
-  }
-  next()
-}
-
-export { validateCartRequestBody, validateCartRequestQuantityBody }
+export { validateCartRequestBody }

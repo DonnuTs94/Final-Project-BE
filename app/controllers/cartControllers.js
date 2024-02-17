@@ -47,8 +47,8 @@ const cartsController = {
       if (!productExistInCart) {
         return res.status(400).json({ message: "Products doesn't exist in cart" })
       }
-      if (req.body.quantity >= product.quantity) {
-        return res.status(400).json({ message: "Product stock is not avaible" })
+      if (product >= product.quantity) {
+        return res.status(400).json({ message: "Product stock is not available" })
       }
       const totalAmount = Number(quantity) * productExistInCart.Product.price
       const cartId = productExistInCart.id
