@@ -47,7 +47,6 @@ const orderController = {
       res.status(500).json({
         message: "Internal Server Error"
       })
-      console.log(err)
     }
   },
 
@@ -66,7 +65,6 @@ const orderController = {
       res.status(500).json({
         message: "Internal Server Error"
       })
-      console.log(err)
     }
   },
 
