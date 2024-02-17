@@ -37,4 +37,40 @@ const validateInputProduct = async (req, res, next) => {
   next()
 }
 
-export { validateInputProduct }
+const validateParamsProduct = async (req, res, next) => {
+  const { id } = req.params
+
+  if (!id) {
+    return res.status(400).json({
+      message: "Product id is required"
+    })
+  }
+
+  if (isNaN(Number(id))) {
+    return res.status(400).json({
+      message: "Product id must be a number"
+    })
+  }
+
+  next()
+}
+
+const validateBodyImgId = (req, res, next) => {
+  const { imageId } = req.body
+
+  if (!imageId) {
+    return res.status(400).json({
+      message: "Image id is required"
+    })
+  }
+
+  if (isNaN(Number(imageId))) {
+    return res.status(400).json({
+      message: "Image id must be a number"
+    })
+  }
+
+  next()
+}
+
+export { validateInputProduct, validateParamsProduct, validateBodyImgId }

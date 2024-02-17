@@ -62,7 +62,7 @@ const validateImageApprovalLimit = async (req, res, next) => {
 
   const getImageProduct = await getImageCountByProductId(productId)
 
-  if (getImageProduct > MAX_FILE_ACCEPT) {
+  if (getImageProduct >= MAX_FILE_ACCEPT) {
     return res.status(400).json({
       message: "You have maximum images files"
     })

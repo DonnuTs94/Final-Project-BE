@@ -41,9 +41,9 @@ const productImageController = {
 
   deleteImage: async (req, res) => {
     try {
-      const { productImageId } = req.body
+      const { imageId } = req.body
 
-      const productImage = await getImageById(Number(productImageId))
+      const productImage = await getImageById(Number(imageId))
 
       if (!productImage) {
         return res.status(400).json({
@@ -53,9 +53,19 @@ const productImageController = {
 
       const imageData = await deleteImageById(productImage.id)
 
-      fs.unlinkSync(`${PATH}/` + imageData.imageUrl)
+      const imagePath = `${PATH}/` + imageData.imageUrl
+
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath)
+        return res.status(200).json({
+          message: "Successfully delete image"
+        })
+      } else {
+        return res.status(400).json({
+          message: "Image file not found!"
+        })
+      }
     } catch (err) {
-      console.log(err)
       return res.status(500).json({
         message: "Internal server error"
       })
