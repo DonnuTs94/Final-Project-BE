@@ -67,7 +67,6 @@ const productController = {
       )
 
       const totalData = await countProductData(product, Number(category))
-
       const totalPages = Math.ceil(totalData / pageSize)
 
       return res.status(200).json({
