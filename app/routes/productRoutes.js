@@ -9,6 +9,8 @@ import { Permission } from "../constants/authorization.js"
 
 const router = Router()
 
+router.get("/", productController.getAllProduct)
+
 router.post(
   "/",
   validateToken,
