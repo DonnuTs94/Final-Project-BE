@@ -28,6 +28,7 @@ export const Permission = {
   READ_ORDER: "read_order",
   ADD_ORDER: "add_order",
   ADMIN_BROWSE_ORDERS: "admin_browse_orders",
+  ADMIN_READ_ORDER: "admin_read_orders",
 
   ADD_IMAGE: "add_image",
   DELETE_IMAGE: "delete_image"
@@ -50,6 +51,7 @@ export const PermissionAssignment = {
     Permission.ADD_CATEGORY,
 
     Permission.ADMIN_BROWSE_ORDERS,
+    Permission.ADMIN_READ_ORDER,
 
     Permission.ADD_IMAGE,
     Permission.DELETE_IMAGE
