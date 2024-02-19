@@ -43,4 +43,10 @@ const paymentCheck = (order) => {
   })
 }
 
-export { paymentCheck }
+const testSchedule = (order) => {
+  schedule.scheduleJob("*/10 * * * * *", async () => {
+    console.log("BABI")
+  })
+}
+
+export { paymentCheck, testSchedule }
