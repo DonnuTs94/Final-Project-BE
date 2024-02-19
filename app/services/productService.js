@@ -84,6 +84,18 @@ const softDeleteProduct = async (id) => {
   })
 }
 
+const editProductById = async (id, body) => {
+  return await prisma.product.update({
+    where: {
+      id
+    },
+    data: {
+      quantity: body.quantity,
+      price: body.price
+    }
+  })
+}
+
 const updateManyProductQty = async (productId, qty) => {
   return await prisma.product.updateMany({
     where: {
@@ -99,9 +111,10 @@ const updateManyProductQty = async (productId, qty) => {
 
 export {
   createDataProduct,
-  findProductById,
   findAllProduct,
   countProductData,
   softDeleteProduct,
+  findProductById,
+  editProductById,
   updateManyProductQty
 }

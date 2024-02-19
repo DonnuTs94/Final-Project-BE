@@ -65,4 +65,10 @@ router.delete(
   productImageController.deleteImage
 )
 
+router.put(
+  "/:id/product",
+  validateToken,
+  authorizationPermission(Permission.EDIT_PRODUCT),
+  productController.editProduct
+)
 export default router

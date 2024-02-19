@@ -20,7 +20,7 @@ const validateCartRequestBody = (req, res, next) => {
 
   if (quantity <= 0) {
     return res.status(400).json({
-      message: "Minimun Quantity is 1"
+      message: "Minimum Quantity is 1"
     })
   }
 
