@@ -73,7 +73,23 @@ const createOrderTransaction = async (
       }
     })
 
-    await tx.cart.deleteMany({
+    for (const item of orderItemsList) {
+      const updatedItem = await tx.product.updateMany({
+        where: {
+          id: item.productId
+        },
+        data: {
+          quantity: {
+            decrement: item.quantity
+          }
+        }
+      })
+      if (updatedItem.count === 0) {
+        throw new Error("Failed to update product quantity")
+      }
+    }
+
+    const deletedCarts = await tx.cart.deleteMany({
       where: {
         userId,
         id: {
@@ -81,6 +97,10 @@ const createOrderTransaction = async (
         }
       }
     })
+
+    if (deletedCarts.count !== selectedCarts.length) {
+      throw new Error("Failed to delete items in cart")
+    }
 
     return { ...order, destination: destinationCity, orderItemsList }
   })
