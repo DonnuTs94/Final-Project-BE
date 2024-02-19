@@ -29,6 +29,7 @@ export const Permission = {
   ADD_ORDER: "add_order",
 
   ADMIN_BROWSE_ORDERS: "admin_browse_orders",
+  ADMIN_READ_ORDER: "admin_read_orders",
 
   ADD_IMAGE: "add_image",
   DELETE_IMAGE: "delete_image"
