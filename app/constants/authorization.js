@@ -4,6 +4,9 @@ export const Role = {
 }
 
 export const Permission = {
+  BROWSE_USERS: "browse_users",
+  EDIT_USER: "edit_user",
+
   BROWSE_PRODUCTS: "browse_products",
   READ_PRODUCT: "read_product",
   EDIT_PRODUCT: "edit_product",
