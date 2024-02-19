@@ -4,8 +4,8 @@ import { ADD_1H, ORDER_STATUS } from "../constants/order.js"
 import { prisma } from "../config/prisma.js"
 
 const paymentCheck = (order) => {
-  //   const timeMustBeCheck = addSeconds(order.date, 5)
-  const timeMustBeCheck = addHours(order.date, ADD_1H)
+  const timeMustBeCheck = addSeconds(order.date, 5) // buat testing aja
+  // const timeMustBeCheck = addHours(order.date, ADD_1H) // buat live
 
   schedule.scheduleJob(timeMustBeCheck, async () => {
     if (order.status === ORDER_STATUS.WAITING_FOR_PAYMENT) {

@@ -116,15 +116,18 @@ model Cart {
 }
 
 model Order {
-  id        Int         @id @default(autoincrement())
-  invoice   String      @unique
-  date      DateTime
-  total     Float
-  userId    Int?
-  status    Status
-  orderItem OrderItem[]
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  id          Int         @id @default(autoincrement())
+  invoice     String      @unique
+  date        DateTime
+  destination Int
+  totalOrder  Float       @map("total_order")
+  totalOngkir Float       @map("total_ongkir")
+  grandTotal  Float       @map("grand_total")
+  userId      Int?
+  status      Status
+  orderItem   OrderItem[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 
   User User? @relation(fields: [userId], references: [id])
 

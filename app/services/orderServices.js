@@ -1,3 +1,4 @@
+import { getCityById } from "../api/rajaOngkir.js"
 import { prisma } from "../config/prisma.js"
 import { ORDER_STATUS } from "../constants/order.js"
 
@@ -5,7 +6,12 @@ const getOrders = async () => {
   return await prisma.order.findMany()
 }
 
-const createOrderTransaction = async (selectedCarts, userId) => {
+const createOrderTransaction = async (
+  selectedCarts,
+  destination,
+  totalOngkir,
+  userId
+) => {
   const ordersData = await getOrders()
 
   let invoiceNumber = 0
@@ -19,9 +25,13 @@ const createOrderTransaction = async (selectedCarts, userId) => {
     invoiceNumber = lastOrderId + 1
   }
 
+  const destinationCity = await getCityById(destination)
+
   const totalOrder = selectedCarts.reduce((total, cart) => {
     return total + cart.total
   }, 0)
+
+  const grandTotal = totalOrder + totalOngkir
 
   return await prisma.$transaction(async (tx) => {
     const order = await tx.order.create({
@@ -29,7 +39,10 @@ const createOrderTransaction = async (selectedCarts, userId) => {
         invoice: String(invoiceNumber),
         date: new Date(),
         userId: userId,
-        total: totalOrder,
+        destination,
+        totalOrder,
+        totalOngkir,
+        grandTotal,
         status: ORDER_STATUS.WAITING_FOR_PAYMENT
       }
     })
@@ -54,6 +67,12 @@ const createOrderTransaction = async (selectedCarts, userId) => {
       throw new Error("Failed to create order items")
     }
 
+    const orderItemsList = await tx.orderItem.findMany({
+      where: {
+        orderId: order.id
+      }
+    })
+
     await tx.cart.deleteMany({
       where: {
         userId,
@@ -63,7 +82,7 @@ const createOrderTransaction = async (selectedCarts, userId) => {
       }
     })
 
-    return order
+    return { ...order, destination: destinationCity, orderItemsList }
   })
 }
 
