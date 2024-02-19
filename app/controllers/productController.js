@@ -134,15 +134,17 @@ const productController = {
   editProduct: async (req, res) => {
     try {
       const { id } = req.params
-      const editProducts = await editProductById(Number(id))
+      const newData = req.body
+      const editProducts = await editProductById(Number(id), newData)
       if (!editProducts) {
-        res.status(400).json({ message: "Product not found" })
+        return res.status(400).json({ message: "Product not found" })
       }
       res.json({
         message: "Success edited data product!",
         data: editProducts
       })
     } catch (err) {
+      console.log(err)
       res.status(500).json({
         message: "Failed to update data product"
       })

@@ -1,5 +1,3 @@
-// import { findProductbyId } from "../services/productService.js"
-
 const validateCartRequestBody = (req, res, next) => {
   const { productId, quantity } = req.body
   if (!productId) {
