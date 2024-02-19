@@ -98,7 +98,7 @@ const createOrderTransaction = async (
       }
     })
 
-    if (deletedCarts.count === selectedCarts.length) {
+    if (deletedCarts.count !== selectedCarts.length) {
       throw new Error("Failed to delete items in cart")
     }
 
