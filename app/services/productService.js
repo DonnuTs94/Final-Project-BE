@@ -86,8 +86,8 @@ const softDeleteProduct = async (id) => {
 
 export {
   createDataProduct,
-  findProductById,
   findAllProduct,
   countProductData,
-  softDeleteProduct
+  softDeleteProduct,
+  findProductById
 }

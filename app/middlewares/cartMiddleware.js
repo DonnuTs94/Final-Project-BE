@@ -1,4 +1,4 @@
-import { findProductbyId } from "../services/productService.js"
+// import { findProductbyId } from "../services/productService.js"
 
 const validateCartRequestBody = (req, res, next) => {
   const { productId, quantity } = req.body
@@ -22,7 +22,7 @@ const validateCartRequestBody = (req, res, next) => {
 
   if (quantity <= 0) {
     return res.status(400).json({
-      message: "Minimun Quantity is 1"
+      message: "Minimum Quantity is 1"
     })
   }
 

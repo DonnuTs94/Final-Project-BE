@@ -71,7 +71,6 @@ const createCart = async ({ quantity, productId }, userId) => {
   }
 }
 
-<<<<<<< HEAD
 const updateCartQuantity = async (cartId, quantity, total) => {
   return await prisma.cart.update({
     where: {
@@ -93,12 +92,10 @@ const deleteItemInCart = async (id) => {
 }
 
 export {
-  getCartbyUserId,
+  getCartByUserId,
   createCart,
   updateCartQuantity,
   getCartbyUserIdAndProductId,
   deleteItemInCart
 }
-=======
-export { getCartByUserId, getCartsByCartIdUserId, createCart }
->>>>>>> 770109d37987150277df106e98b62427849fe60b
+// export { getCartByUserId, getCartsByCartIdUserId, createCart }

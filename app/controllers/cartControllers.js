@@ -1,11 +1,11 @@
 import {
-  getCartbyUserId,
   createCart,
   updateCartQuantity,
   getCartbyUserIdAndProductId,
-  deleteItemInCart
+  deleteItemInCart,
+  getCartByUserId
 } from "../services/cartService.js"
-import { findProductbyId } from "../services/productService.js"
+import { findProductById } from "../services/productService.js"
 
 const cartsController = {
   getCartByUserId: async (req, res) => {
@@ -41,13 +41,13 @@ const cartsController = {
   updateCart: async (req, res) => {
     try {
       const userId = req.user.id
-      const product = await findProductbyId(req.body.productId)
+      const product = await findProductById(req.body.productId)
       const { productId, quantity } = req.body
       const productExistInCart = await getCartbyUserIdAndProductId(userId, productId)
       if (!productExistInCart) {
         return res.status(400).json({ message: "Products doesn't exist in cart" })
       }
-      if (quantity >= product.quantity) {
+      if (quantity > product.quantity) {
         return res.status(400).json({ message: "Product stock is not available" })
       }
       const totalAmount = Number(quantity) * productExistInCart.Product.price
