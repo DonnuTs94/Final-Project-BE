@@ -73,14 +73,14 @@ const createOrderTransaction = async (
       }
     })
 
-    await tx.cart.deleteMany({
-      where: {
-        userId,
-        id: {
-          in: selectedCarts.map((cart) => cart.id)
-        }
-      }
-    })
+    // await tx.cart.deleteMany({
+    //   where: {
+    //     userId,
+    //     id: {
+    //       in: selectedCarts.map((cart) => cart.id)
+    //     }
+    //   }
+    // })
 
     return { ...order, destination: destinationCity, orderItemsList }
   })
@@ -107,4 +107,30 @@ const getAllAdminOrders = async ({ skip = 0, take = 10 }) => {
   })
 }
 
-export { getOrders, createOrderTransaction, getOrdersByUserId, getAllAdminOrders }
+const updateStatusOrder = async (orderId, status) => {
+  return await prisma.order.update({
+    where: {
+      id: Number(orderId)
+    },
+    data: {
+      status
+    }
+  })
+}
+
+const findOrderById = async (orderId) => {
+  return await prisma.order.findFirst({
+    where: {
+      id: orderId
+    }
+  })
+}
+
+export {
+  getOrders,
+  createOrderTransaction,
+  getOrdersByUserId,
+  getAllAdminOrders,
+  updateStatusOrder,
+  findOrderById
+}
