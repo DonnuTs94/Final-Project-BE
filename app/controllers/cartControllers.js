@@ -1,11 +1,11 @@
-import { getCartbyUserId, createCart } from "../services/cartService.js"
-import { findProductbyId } from "../services/productService.js"
+import { getCartByUserId, createCart } from "../services/cartService.js"
+import { findProductById } from "../services/productService.js"
 
 const cartsController = {
-  getCartbyUserId: async (req, res) => {
+  getCartByUserId: async (req, res) => {
     try {
       const id = req.user.id
-      const cart = await getCartbyUserId(id)
+      const cart = await getCartByUserId(id)
       res.status(200).json({ message: "Success Get Cart", data: cart })
     } catch (err) {
       res.status(500).json({ message: "Failed Get Cart" })
@@ -14,15 +14,16 @@ const cartsController = {
 
   createCart: async (req, res) => {
     try {
-      const product = await findProductbyId(req.body.productId)
+      const product = await findProductById(req.body.productId)
 
       if (!product) {
         return res.status(400).json({ message: "Product not found" })
       }
 
       if (product.quantity < req.body.quantity) {
-        return res.status(400).json({ message: "Product stock is not avaible" })
+        return res.status(400).json({ message: "Product stock is not available" })
       }
+
       const { quantity, productId } = req.body
       const id = req.user.id
       const cart = await createCart({ quantity, productId }, id)

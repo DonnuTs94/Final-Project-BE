@@ -2,6 +2,7 @@ import multer from "multer"
 import fs from "fs"
 import { upload } from "../config/uploader.js"
 import { LIMIT_FILE_SIZE, MAX_FILE_ACCEPT } from "../constants/upload.js"
+import { getImageCountByProductId } from "../services/productImageService.js"
 
 const validateFileUpload = ({ path, fileTypes, filePrefix, imgSize }) => {
   return async (req, res, next) => {
@@ -50,4 +51,24 @@ const validateFileUpload = ({ path, fileTypes, filePrefix, imgSize }) => {
   }
 }
 
-export { validateFileUpload }
+const validateImageApprovalLimit = async (req, res, next) => {
+  const productId = Number(req.params.id)
+
+  if (isNaN(Number(productId))) {
+    return res.status(400).json({
+      message: "ProductId must be a number"
+    })
+  }
+
+  const getImageProduct = await getImageCountByProductId(productId)
+
+  if (getImageProduct >= MAX_FILE_ACCEPT) {
+    return res.status(400).json({
+      message: "You have maximum images files"
+    })
+  }
+
+  next()
+}
+
+export { validateFileUpload, validateImageApprovalLimit }

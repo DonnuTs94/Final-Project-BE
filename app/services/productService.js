@@ -12,8 +12,82 @@ const createDataProduct = async (name, quantity, price, description, categoryId)
   })
 }
 
-const findProductbyId = async (id) => {
-  return await prisma.product.findUnique({ where: { id } })
+const findProductById = async (id) => {
+  return await prisma.product.findFirst({
+    where: {
+      id,
+      isDeleted: false
+    },
+    include: {
+      Category: {
+        select: {
+          name: true
+        }
+      },
+      productImages: {
+        select: {
+          imageUrl: true
+        }
+      }
+    }
+  })
 }
 
-export { createDataProduct, findProductbyId }
+const findAllProduct = async (product, category, pageSize, offset) => {
+  return await prisma.product.findMany({
+    take: pageSize,
+    skip: offset,
+    where: {
+      name: {
+        contains: product
+      },
+      isDeleted: false,
+      ...(category ? { categoryId: category } : {})
+    },
+    include: {
+      Category: {
+        select: {
+          name: true
+        }
+      },
+      productImages: {
+        select: {
+          imageUrl: true
+        }
+      }
+    },
+    orderBy: {
+      name: "asc"
+    }
+  })
+}
+
+const countProductData = async (product, category) => {
+  return await prisma.product.count({
+    where: {
+      name: {
+        contains: product
+      },
+      ...(category ? { categoryId: category } : {})
+    }
+  })
+}
+
+const softDeleteProduct = async (id) => {
+  return await prisma.product.update({
+    where: {
+      id
+    },
+    data: {
+      isDeleted: true
+    }
+  })
+}
+
+export {
+  createDataProduct,
+  findProductById,
+  findAllProduct,
+  countProductData,
+  softDeleteProduct
+}
