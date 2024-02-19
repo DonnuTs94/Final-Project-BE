@@ -22,4 +22,18 @@ router.post(
   cartControllers.createCart
 )
 
+router.put(
+  "/update",
+  validateToken,
+  authorizationPermission(Permission.EDIT_CART),
+  validateCartRequestBody,
+  cartControllers.updateCart
+)
+
+router.delete(
+  "/delete/:id",
+  validateToken,
+  authorizationPermission(Permission.DELETE_CART),
+  cartControllers.deleteItemInCart
+)
 export default router
