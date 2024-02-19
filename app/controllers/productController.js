@@ -3,6 +3,7 @@ import { createMultipleImages } from "../services/productImageService.js"
 import {
   countProductData,
   createDataProduct,
+  editProductById,
   findAllProduct,
   findProductById,
   softDeleteProduct
@@ -126,6 +127,24 @@ const productController = {
     } catch (err) {
       res.status(500).json({
         message: "Internal server error"
+      })
+    }
+  },
+
+  editProduct: async (req, res) => {
+    try {
+      const { id } = req.params
+      const editProducts = await editProductById(Number(id))
+      if (!editProducts) {
+        res.status(400).json({ message: "Product not found" })
+      }
+      res.json({
+        message: "Success edited data product!",
+        data: editProducts
+      })
+    } catch (err) {
+      res.status(500).json({
+        message: "Failed to update data product"
       })
     }
   }

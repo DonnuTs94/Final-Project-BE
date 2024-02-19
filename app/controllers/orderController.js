@@ -4,7 +4,7 @@ import {
   getAllAdminOrders
 } from "../services/orderServices.js"
 
-import { getCartsByCartIdUserId } from "../services/cartService.js"
+import { getCartsByCartIdAndUserId } from "../services/cartService.js"
 import { createcors } from "../api/rajaOngkir.js"
 import { ORDER_SHIPPING } from "../constants/order.js"
 import { paymentCheck } from "../schedule/paymentCheck.js"
@@ -15,7 +15,7 @@ const orderController = {
       const { cartId, destination, weight, shippingOption } = req.body
       const userId = req.user.id
 
-      const selectedCarts = await getCartsByCartIdUserId(cartId, userId)
+      const selectedCarts = await getCartsByCartIdAndUserId(cartId, userId)
 
       if (selectedCarts.length === 0) {
         return res.status(400).json({

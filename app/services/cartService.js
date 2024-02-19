@@ -16,7 +16,7 @@ const getCartbyUserIdAndProductId = async (userId, productId) => {
   })
 }
 
-const getCartsByCartIdUserId = async (cartId, userId) => {
+const getCartsByCartIdAndUserId = async (cartId, userId) => {
   return await prisma.cart.findMany({
     where: {
       id: {
@@ -96,6 +96,6 @@ export {
   createCart,
   updateCartQuantity,
   getCartbyUserIdAndProductId,
-  deleteItemInCart
+  deleteItemInCart,
+  getCartsByCartIdAndUserId
 }
-// export { getCartByUserId, getCartsByCartIdUserId, createCart }
