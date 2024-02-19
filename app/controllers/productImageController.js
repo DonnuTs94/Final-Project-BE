@@ -13,6 +13,12 @@ const productImageController = {
 
       const files = req.files
 
+      if (files.length === 0) {
+        return res.status(400).json({
+          message: "Please select at least one image to upload for the product."
+        })
+      }
+
       if (files.length > 1) {
         files.map((file) => {
           fs.unlinkSync(file.path)

@@ -36,5 +36,8 @@ const editUser = async (userId, firstName, lastName, address) => {
     }
   })
 }
+const findRole = async () => {
+  return await prisma.role.findMany()
+}
 
-export{getUsers,findUserByEmail,createUser,editUser}
+export { getUsers, findUserByEmail, createUser, editUser, findRole }

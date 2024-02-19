@@ -10,13 +10,16 @@ import transactionRoutes from "./routes/transactionRoutes.js"
 
 const router = Router()
 
-router.use("/auth", authRoutes)
 router.use("/user", userRoutes)
+router.use("/auth", authRoutes)
 router.use("/categories", categoryRoutes)
 router.use("/product", productRoutes)
 router.use("/carts", cartRoutes)
 router.use("/shippingCost", shippingCostRoutes)
 router.use("/orders", orderRoutes)
 router.use("/payment", transactionRoutes)
+
+// import expressListRoutes from "express-list-routes"
+// expressListRoutes(router)
 
 export default router
