@@ -1,4 +1,4 @@
-import { editUser } from "../services/userServices.js"
+import { editUser, getUsers } from "../services/userServices.js"
 import bcrypt from "bcrypt"
 import { findUserByEmail } from "../services/userServices.js"
 import { createUser } from "../services/userServices.js"
@@ -48,6 +48,20 @@ const userController = {
       res.status(200).json({
         message: "Register Success",
         user
+      })
+    } catch (err) {
+      res.status(500).json({
+        message: "Internal Server Error"
+      })
+    }
+  },
+  getAllUsers: async (req, res) => {
+    try {
+      const users = await getUsers()
+
+      res.json({
+        message: "Get all users success",
+        users
       })
     } catch (err) {
       res.status(500).json({
