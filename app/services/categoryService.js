@@ -1,7 +1,11 @@
 import { prisma } from "../config/prisma.js"
 
 const getAllCategories = async () => {
-  return await prisma.category.findMany()
+  return await prisma.category.findMany({
+    where: {
+      isDeleted: false
+    }
+  })
 }
 
 const createCategory = async (category) => {
