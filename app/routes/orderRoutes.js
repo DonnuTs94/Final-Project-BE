@@ -26,8 +26,21 @@ router.get(
   "/admin",
   validateToken,
   authorizationPermission(Permission.ADMIN_BROWSE_ORDERS),
-  validateInputOrder,
   orderController.getAllAdminOrders
+)
+
+router.get(
+  "/users/:id",
+  validateToken,
+  authorizationPermission(Permission.READ_ORDER),
+  orderController.getOrderById
+)
+
+router.get(
+  "/admin/:id",
+  validateToken,
+  authorizationPermission(Permission.ADMIN_READ_ORDER),
+  orderController.getAdminOrderById
 )
 
 export default router

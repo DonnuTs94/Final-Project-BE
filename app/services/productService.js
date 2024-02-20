@@ -96,11 +96,25 @@ const editProductById = async (id, body) => {
   })
 }
 
+const updateManyProductQty = async (productId, qty) => {
+  return await prisma.product.updateMany({
+    where: {
+      id: Number(productId)
+    },
+    data: {
+      quantity: {
+        increment: qty
+      }
+    }
+  })
+}
+
 export {
   createDataProduct,
   findAllProduct,
   countProductData,
   softDeleteProduct,
   findProductById,
-  editProductById
+  editProductById,
+  updateManyProductQty
 }
