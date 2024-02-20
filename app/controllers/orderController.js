@@ -1,7 +1,9 @@
 import {
   createOrderTransaction,
   getOrdersByUserId,
-  getAllAdminOrders
+  getAllAdminOrders,
+  getOrderById,
+  getOrderByIdAndUserId
 } from "../services/orderServices.js"
 
 import { getCartsByCartIdAndUserId } from "../services/cartService.js"
@@ -103,6 +105,75 @@ const orderController = {
       res.status(200).json({
         message: "Success Get All Admin Orders",
         data: orders
+      })
+    } catch (err) {
+      res.status(500).json({
+        message: "Internal Server Error"
+      })
+    }
+  },
+  getAdminOrderById: async (req, res) => {
+    try {
+      const orderId = req.params.id
+
+      if (!orderId) {
+        return res.status(400).json({
+          message: "Please provide an order id"
+        })
+      }
+
+      if (isNaN(Number(orderId))) {
+        return res.status(400).json({
+          message: "Order id must be a number"
+        })
+      }
+
+      const order = await getOrderById(Number(orderId))
+
+      if (!order) {
+        return res.status(404).json({
+          message: "Order not found"
+        })
+      }
+
+      res.json({
+        message: "Success get order data!",
+        order
+      })
+    } catch (err) {
+      res.status(500).json({
+        message: "Internal Server Error"
+      })
+    }
+  },
+  getOrderById: async (req, res) => {
+    try {
+      const orderId = req.params.id
+      const userId = req.user.id
+
+      if (!orderId) {
+        return res.status(400).json({
+          message: "Please provide an order id"
+        })
+      }
+
+      if (isNaN(Number(orderId))) {
+        return res.status(400).json({
+          message: "Order id must be a number"
+        })
+      }
+
+      const order = await getOrderByIdAndUserId(Number(orderId), userId)
+
+      if (!order) {
+        return res.status(404).json({
+          message: "Order not found"
+        })
+      }
+
+      res.json({
+        message: "Success get order data!",
+        order
       })
     } catch (err) {
       res.status(500).json({

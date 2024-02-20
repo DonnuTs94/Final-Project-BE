@@ -6,6 +6,14 @@ const getOrders = async () => {
   return await prisma.order.findMany()
 }
 
+const getOrderById = async (id) => {
+  return await prisma.order.findUnique({ where: { id } })
+}
+
+const getOrderByIdAndUserId = async (id, userId) => {
+  return await prisma.order.findUnique({ where: { id, userId } })
+}
+
 const createOrderTransaction = async (
   selectedCarts,
   destination,
