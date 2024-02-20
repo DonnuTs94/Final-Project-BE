@@ -35,7 +35,7 @@ const paymentCheck = (order) => {
       //   })
       // )
 
-      console.log("ASU")
+      console.log("Test")
     }
     // schedule.scheduleJob(timeTest, () => {
     //   console.log("OKE")
@@ -45,7 +45,7 @@ const paymentCheck = (order) => {
 
 const testSchedule = (order) => {
   schedule.scheduleJob("*/10 * * * * *", async () => {
-    console.log("BABI")
+    console.log("Test")
   })
 }
 
