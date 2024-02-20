@@ -109,6 +109,21 @@ const updateManyProductQty = async (productId, qty) => {
   })
 }
 
+const finAllProductData = async () => {
+  return await prisma.product.findMany({
+    where: {
+      isDeleted: false
+    },
+    include: {
+      Category: {
+        select: {
+          name: true
+        }
+      }
+    }
+  })
+}
+
 export {
   createDataProduct,
   findAllProduct,
@@ -116,5 +131,6 @@ export {
   softDeleteProduct,
   findProductById,
   editProductById,
-  updateManyProductQty
+  updateManyProductQty,
+  finAllProductData
 }

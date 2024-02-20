@@ -6,7 +6,8 @@ import {
   editProductById,
   findAllProduct,
   findProductById,
-  softDeleteProduct
+  softDeleteProduct,
+  finAllProductData
 } from "../services/productService.js"
 
 const productController = {
@@ -146,6 +147,20 @@ const productController = {
     } catch (err) {
       res.status(500).json({
         message: "Failed to update data product"
+      })
+    }
+  },
+  getAllProductData: async (req, res) => {
+    try {
+      const product = await finAllProductData()
+
+      return res.status(200).json({
+        message: "Success get all product",
+        data: product
+      })
+    } catch (error) {
+      return res.status(500).json({
+        message: "Internal server error"
       })
     }
   }
