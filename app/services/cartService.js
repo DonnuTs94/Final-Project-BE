@@ -83,11 +83,18 @@ const updateCartQuantity = async (cartId, quantity, total) => {
   })
 }
 
-const deleteItemInCart = async (userId, id) => {
+const findCart = async (id) => {
+  return await prisma.cart.findFirst({
+    where: {
+      id
+    }
+  })
+}
+
+const deleteCart = async (cartId) => {
   return await prisma.cart.delete({
     where: {
-      id,
-      userId
+      id: cartId
     }
   })
 }
@@ -97,6 +104,7 @@ export {
   createCart,
   updateCartQuantity,
   getCartbyUserIdAndProductId,
-  deleteItemInCart,
-  getCartsByCartIdAndUserId
+  getCartsByCartIdAndUserId,
+  findCart,
+  deleteCart
 }
