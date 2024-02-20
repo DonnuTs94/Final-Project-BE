@@ -9,7 +9,7 @@ import {
 import { getCartsByCartIdAndUserId } from "../services/cartService.js"
 import { createcors } from "../api/rajaOngkir.js"
 import { ORDER_SHIPPING } from "../constants/order.js"
-import { paymentCheck } from "../schedule/paymentCheck.js"
+import { paymentCheck, testSchedule } from "../schedule/paymentCheck.js"
 
 const orderController = {
   createOrder: async (req, res) => {
@@ -62,7 +62,8 @@ const orderController = {
         userId
       )
 
-      paymentCheck(newOrder)
+      // paymentCheck(newOrder)
+      testSchedule(newOrder)
 
       res.status(201).json({
         message: "Success Create Order",

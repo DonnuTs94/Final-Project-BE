@@ -135,11 +135,30 @@ const getAllAdminOrders = async ({ skip = 0, take = 10 }) => {
   })
 }
 
+const updateStatusOrder = async (orderId, status) => {
+  return await prisma.order.update({
+    where: {
+      id: Number(orderId)
+    },
+    data: {
+      status
+    }
+  })
+}
+
+const findOrderById = async (orderId) => {
+  return await prisma.order.findFirst({
+    where: {
+      id: orderId
+    }
+  })
+}
+
 export {
   getOrders,
-  getOrderById,
-  getOrderByIdAndUserId,
   createOrderTransaction,
   getOrdersByUserId,
-  getAllAdminOrders
+  getAllAdminOrders,
+  updateStatusOrder,
+  findOrderById
 }
