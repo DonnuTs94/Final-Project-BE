@@ -31,9 +31,9 @@ router.put(
 )
 
 router.delete(
-  "/delete/:id",
+  "/delete",
   validateToken,
   authorizationPermission(Permission.DELETE_CART),
-  cartControllers.deleteItemInCart
+  cartControllers.deleteCart
 )
 export default router

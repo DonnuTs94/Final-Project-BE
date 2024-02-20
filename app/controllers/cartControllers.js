@@ -2,8 +2,9 @@ import {
   createCart,
   updateCartQuantity,
   getCartbyUserIdAndProductId,
-  deleteItemInCart,
-  getCartByUserId
+  getCartByUserId,
+  findCart,
+  deleteCart
 } from "../services/cartService.js"
 import { findProductById } from "../services/productService.js"
 
@@ -64,22 +65,17 @@ const cartsController = {
       res.status(500).json({ message: "Failed update Cart" })
     }
   },
-  deleteItemInCart: async (req, res) => {
+  deleteCart: async (req, res) => {
     try {
-      const { id } = req.params
-      const userId = req.user.id
-      if (isNaN(Number(id))) {
-        return res.status(400).json({ message: "Invalid ID parameter" })
+      const { id } = req.body
+      const cart = await findCart(id)
+      if (!cart) {
+        return res.status(400).json({ message: "Cart doesn't exist" })
       }
-      const itemId = Number(id)
-      const isProductExistInCart = await getCartbyUserIdAndProductId(userId, itemId)
-      if (!isProductExistInCart) {
-        return res.status(400).json({ message: "Product doesn't exist" })
-      }
-      await deleteItemInCart(userId, itemId)
-      return res.status(200).json({ message: "Success Delete Category" })
+      const removeCart = await deleteCart(id)
+      return res.status(200).json({ message: "Cart success to remove", removeCart })
     } catch (err) {
-      res.status(500).json({ message: "Failed delete item in Cart" })
+      res.status(500).json({ message: "Failed to remove Cart" })
     }
   }
 }
