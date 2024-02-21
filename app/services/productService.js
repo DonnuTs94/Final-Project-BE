@@ -120,6 +120,9 @@ const finAllProductData = async () => {
           name: true
         }
       }
+    },
+    orderBy: {
+      createdAt: "desc"
     }
   })
 }

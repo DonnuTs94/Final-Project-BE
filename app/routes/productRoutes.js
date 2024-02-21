@@ -23,8 +23,8 @@ router.get("/:id", validateParamsProduct, productController.getProductById)
 
 router.post(
   "/",
-  validateToken,
-  authorizationPermission(Permission.ADD_PRODUCT),
+  // validateToken,
+  // authorizationPermission(Permission.ADD_PRODUCT),
   validateFileUpload({
     path: PATH,
     fileTypes: FILE_TYPES,
