@@ -26,6 +26,7 @@ const findProductById = async (id) => {
       },
       productImages: {
         select: {
+          id: true,
           imageUrl: true
         }
       }

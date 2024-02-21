@@ -76,7 +76,7 @@ model Product {
   name          String
   quantity      Int
   price         Float
-  description   String
+  description   String         @db.Text
   isDeleted     Boolean        @default(false)
   categoryId    Int?
   productImages ProductImage[]
