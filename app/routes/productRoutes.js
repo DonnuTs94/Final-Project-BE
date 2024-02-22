@@ -67,7 +67,7 @@ router.delete(
 )
 
 router.put(
-  "/:id/product",
+  "/:id",
   validateToken,
   authorizationPermission(Permission.EDIT_PRODUCT),
   productController.editProduct
