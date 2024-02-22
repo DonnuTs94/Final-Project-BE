@@ -36,6 +36,7 @@ const userController = {
       }
       const userId = await getRoleId(Role.USER)
       const roleId = Number(userId.id)
+
       const hashedPassword = bcrypt.hashSync(password, Number(BCRYPT_AROUND))
       const user = await createUser(
         firstName,
