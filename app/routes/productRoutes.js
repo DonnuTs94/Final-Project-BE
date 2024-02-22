@@ -23,8 +23,8 @@ router.get("/:id", validateParamsProduct, productController.getProductById)
 
 router.post(
   "/",
-  // validateToken,
-  // authorizationPermission(Permission.ADD_PRODUCT),
+  validateToken,
+  authorizationPermission(Permission.ADD_PRODUCT),
   validateFileUpload({
     path: PATH,
     fileTypes: FILE_TYPES,
@@ -37,7 +37,7 @@ router.post(
 
 router.post(
   "/:id/image",
-  // validateToken,
+  validateToken,
   validateImageApprovalLimit,
   validateFileUpload({
     path: PATH,
@@ -45,23 +45,23 @@ router.post(
     filePrefix: FILE_PREFIX,
     imgSize: SIZE_1MB
   }),
-  // authorizationPermission(Permission.ADD_IMAGE),
+  authorizationPermission(Permission.ADD_IMAGE),
   validateParamsProduct,
   productImageController.addImage
 )
 
 router.delete(
   "/softDelete/:id",
-  // validateToken,
-  // authorizationPermission(Permission.DELETE_PRODUCT),
+  validateToken,
+  authorizationPermission(Permission.DELETE_PRODUCT),
   validateParamsProduct,
   productController.softDeleteProduct
 )
 
 router.delete(
   "/:id/image",
-  // validateToken,
-  // authorizationPermission(Permission.DELETE_IMAGE),
+  validateToken,
+  authorizationPermission(Permission.DELETE_IMAGE),
   validateBodyImgId,
   productImageController.deleteImage
 )
