@@ -17,6 +17,7 @@ import productImageController from "../controllers/productImageController.js"
 
 const router = Router()
 
+router.get("/table", productController.getAllProductData)
 router.get("/", productController.getAllProduct)
 router.get("/:id", validateParamsProduct, productController.getProductById)
 

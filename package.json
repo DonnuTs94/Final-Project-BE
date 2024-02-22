@@ -8,6 +8,7 @@
     "dev": "npx nodemon --watch \" ./app/**/*.js\" --exec \"node server.js\"",
     "migrate": "npx prisma migrate dev",
     "seed": "node ./database/authorizationSeeder.js && node ./database/userSeeder.js && node ./database/categoriesSeeder.js && node ./database/productSeeder.js",
+    "product": "node ./database/productSeeder.js",
     "format": "npx prettier --write ."
   },
   "keywords": [],
