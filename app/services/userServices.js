@@ -12,14 +12,15 @@ const findUserByEmail = async (email) => {
   })
 }
 
-const createUser = async (firstName, lastName, email, password, address) => {
+const createUser = async (firstName, lastName, email, password, address, roleId) => {
   return await prisma.user.create({
     data: {
       firstName,
       lastName,
       email,
       password,
-      address
+      address,
+      roleId
     }
   })
 }
