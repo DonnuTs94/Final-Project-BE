@@ -24,6 +24,9 @@ const findUserByEmail = async (email) => {
   return await prisma.user.findFirst({
     where: {
       email
+    },
+    include: {
+      Role: true
     }
   })
 }
