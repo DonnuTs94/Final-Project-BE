@@ -13,6 +13,9 @@ router.get(
   authorizationPermission(Permission.BROWSE_USERS),
   userController.getAllUsers
 )
+
+router.get("/profile", validateToken, userController.getProfile)
+
 router.post("/register", validateRegisterRequestBody, userController.register)
 
 router.put(

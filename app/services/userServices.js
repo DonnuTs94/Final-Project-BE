@@ -4,6 +4,22 @@ const getUsers = async () => {
   return await prisma.user.findMany()
 }
 
+const findUserById = async (userId) => {
+  return await prisma.user.findUnique({
+    where: {
+      id: userId
+    },
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      email: true,
+      address: true,
+      Role: true
+    }
+  })
+}
+
 const findUserByEmail = async (email) => {
   return await prisma.user.findFirst({
     where: {
@@ -40,4 +56,4 @@ const findRole = async () => {
   return await prisma.role.findMany()
 }
 
-export { getUsers, findUserByEmail, createUser, editUser, findRole }
+export { getUsers, findUserById, findUserByEmail, createUser, editUser, findRole }
