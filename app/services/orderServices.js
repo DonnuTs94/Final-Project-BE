@@ -144,7 +144,17 @@ const getAllAdminOrders = async ({ skip = 0, take = 10 }) => {
       date: "desc"
     },
     skip,
-    take
+    take,
+    include: {
+      User: {
+        select: {
+          firstName: true,
+          lastName: true,
+          address: true
+        }
+      },
+      orderItem: true
+    }
   })
 }
 
