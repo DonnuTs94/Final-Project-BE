@@ -7,8 +7,8 @@ import { findOrderItemFromOrderId } from "../services/orderItemService.js"
 import { updateManyProductQty } from "../services/productService.js"
 
 const paymentCheck = (order) => {
-  const timeMustBeCheck = addSeconds(order.date, 5) // buat testing aja
-  // const timeMustBeCheck = addHours(order.date, ADD_1H) // buat live
+  // const timeMustBeCheck = addSeconds(order.date, 5) // buat testing aja
+  const timeMustBeCheck = addHours(order.date, ADD_1H) // buat live
 
   const timeTest = addSeconds(order.date, 5)
 
@@ -23,9 +23,7 @@ const paymentCheck = (order) => {
       // console.log(`Update status canceled for orderId: ${order.id}  `)
       // await updateStatusOrder(order.id, ORDER_STATUS.CANCELLED)
       // const getOrderItemInOrder = await findOrderItemFromOrderId(order.id)
-
       // console.log(getOrderItemInOrder, "OrderItem")
-
       // await Promise.all(
       //   getOrderItemInOrder.map(async (item) => {
       //     await updateManyProductQty(item.productId, item.quantity)
@@ -34,8 +32,7 @@ const paymentCheck = (order) => {
       //     )
       //   })
       // )
-
-      console.log("Test")
+      // console.log("Test")
     }
     // schedule.scheduleJob(timeTest, () => {
     //   console.log("OKE")
@@ -45,7 +42,7 @@ const paymentCheck = (order) => {
 
 const testSchedule = (order) => {
   schedule.scheduleJob("*/10 * * * * *", async () => {
-    console.log("Test")
+    // console.log("Test")
   })
 }
 

@@ -1,50 +1,52 @@
-import { validationResult, body } from "express-validator"
+import { validationResult } from "express-validator"
 import snap from "../config/snapMidtrans.js"
+import { findOrderById, updateStatusOrder } from "../services/orderServices.js"
+import { ORDER_STATUS } from "../constants/order.js"
 
-const PostCreateTransaction = (req, res) => {
-  const errors = validationResult(req)
 
-  if (!errors.isEmpty()) {
-    res.status(422).json({ errors: errors.array() })
-    return
-  }
+const paymentController = {
+  createPayment: async (req, res) => {
+    try {
+      const errors = validationResult(req)
 
-  const { order_id, first_name, last_name, email, phone, items } = req.body
+      if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() })
+      }
 
-  const gross_amount = items.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  )
+      const orderId = req.body.order_id
 
-  const parameters = {
-    transaction_details: {
-      order_id: order_id,
-      gross_amount: gross_amount
-    },
-    item_details: items,
-    customer_details: {
-      first_name: first_name,
-      last_name: last_name,
-      email: email,
-      phone: phone
-    },
-    expiry: {
-      unit: "minute",
-      duration: 1
+      const order = await findOrderById(orderId)
+
+      if (!order) {
+        return res.status(404).json({ message: "Pesanan tidak ditemukan" })
+      }
+
+      if (order.status !== ORDER_STATUS.WAITING_FOR_PAYMENT) {
+        return res.status(400).json({ message: "Pesanan sudah dibayar atau tidak valid" })
+      }
+
+      const { id, grandTotal } = order
+
+
+      const parameters = {
+        transaction_details: {
+          order_id: id,
+          gross_amount: Math.round(grandTotal)
+        }
+      }
+
+      const transaction = await snap.createTransaction(parameters)
+
+      if (transaction && transaction.transaction_status === "settlement") {
+        await updateStatusOrder(orderId, ORDER_STATUS.PAID)
+      }
+
+      return res.status(200).json(transaction)
+    } catch (error) {
+      console.error("Error dalam membuat pembayaran:", error)
+      return res.status(500).json({ message: "Internal Server Error" })
     }
   }
-
-  snap
-    .createTransaction(parameters)
-    .then((transaction) => {
-      return res.status(200).send(transaction)
-    })
-    .catch((error) => {
-      console.log(error)
-      return res
-        .status(Number(error.httpStatusCode))
-        .send({ message: error.message, status: Number(error.httpStatusCode) })
-    })
 }
 
-export default PostCreateTransaction
+export default paymentController
