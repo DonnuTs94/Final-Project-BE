@@ -104,9 +104,10 @@ const orderController = {
 
       res.status(200).json({
         message: "Success Get All Admin Orders",
-        data: orders
+        orders
       })
     } catch (err) {
+      console.log(err)
       res.status(500).json({
         message: "Internal Server Error"
       })

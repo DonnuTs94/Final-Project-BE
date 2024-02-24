@@ -12,22 +12,42 @@ const getUsers = async () => {
   })
 }
 
-const findUserByEmail = async (email) => {
-  return await prisma.user.findFirst({
+const findUserById = async (userId) => {
+  return await prisma.user.findUnique({
     where: {
-      email
+      id: userId
+    },
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      email: true,
+      address: true,
+      Role: true
     }
   })
 }
 
-const createUser = async (firstName, lastName, email, password, address) => {
+const findUserByEmail = async (email) => {
+  return await prisma.user.findFirst({
+    where: {
+      email
+    },
+    include: {
+      Role: true
+    }
+  })
+}
+
+const createUser = async (firstName, lastName, email, password, address, roleId) => {
   return await prisma.user.create({
     data: {
       firstName,
       lastName,
       email,
       password,
-      address
+      address,
+      roleId
     }
   })
 }
@@ -48,4 +68,4 @@ const findRole = async () => {
   return await prisma.role.findMany()
 }
 
-export { getUsers, findUserByEmail, createUser, editUser, findRole }
+export { getUsers, findUserById, findUserByEmail, createUser, editUser, findRole }

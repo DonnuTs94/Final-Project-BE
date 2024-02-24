@@ -1,4 +1,4 @@
-import { editUser, getUsers } from "../services/userServices.js"
+import { editUser, findUserById, getUsers } from "../services/userServices.js"
 import bcrypt from "bcrypt"
 import { findUserByEmail } from "../services/userServices.js"
 import { createUser } from "../services/userServices.js"
@@ -36,6 +36,7 @@ const userController = {
       }
       const userId = await getRoleId(Role.USER)
       const roleId = Number(userId.id)
+
       const hashedPassword = bcrypt.hashSync(password, Number(BCRYPT_AROUND))
       const user = await createUser(
         firstName,
@@ -62,6 +63,27 @@ const userController = {
       res.json({
         message: "Get all users success",
         users
+      })
+    } catch (err) {
+      res.status(500).json({
+        message: "Internal Server Error"
+      })
+    }
+  },
+  getProfile: async (req, res) => {
+    try {
+      const userId = req.user.id
+
+      const user = await findUserById(userId)
+
+      if (!user) {
+        return res.status(404).json({
+          message: "User not found"
+        })
+      }
+      res.json({
+        message: "Get self success",
+        user
       })
     } catch (err) {
       res.status(500).json({
