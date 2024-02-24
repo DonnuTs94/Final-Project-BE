@@ -1,7 +1,15 @@
 import { prisma } from "../config/prisma.js"
 
 const getUsers = async () => {
-  return await prisma.user.findMany()
+  return await prisma.user.findMany({
+    include: {
+      Role: {
+        select: {
+          name: true
+        }
+      }
+    }
+  })
 }
 
 const findUserById = async (userId) => {
