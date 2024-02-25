@@ -158,22 +158,43 @@ const getAllAdminOrders = async ({ skip = 0, take = 10 }) => {
   })
 }
 
-const updateStatusOrder = async (orderId, status) => {
-  return await prisma.order.update({
-    where: {
-      id: Number(orderId)
-    },
-    data: {
-      status
+const updateStatusOrder = async (id, status) => {
+  try {
+    if (!id) {
+      throw new Error("ID order tidak tersedia")
     }
-  })
+
+    // Memeriksa apakah pesanan dengan ID yang diberikan ada dalam basis data
+    const existingOrder = await prisma.order.findUnique({
+      where: {
+        id: id
+      }
+    })
+
+    if (!existingOrder) {
+      throw new Error("Pesanan tidak ditemukan")
+    }
+
+    // Jika pesanan ditemukan, maka lakukan pembaruan status
+    const updatedOrder = await prisma.order.update({
+      where: {
+        id: id
+      },
+      data: {
+        status
+      }
+    })
+
+    return updatedOrder
+  } catch (error) {
+    throw new Error(`Gagal memperbarui status order: ${error.message}`)
+  }
 }
 
-const findOrderById = async (orderId) => {
-  return await prisma.order.findFirst({
-    where: {
-      id: orderId
-    }
+async function findOrderById(id) {
+  // Memanggil fungsi findFirst dengan id sebagai filter
+  return prisma.order.findUnique({
+    where: { id }
   })
 }
 
