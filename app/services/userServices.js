@@ -23,7 +23,25 @@ const findUserById = async (userId) => {
       lastName: true,
       email: true,
       address: true,
-      Role: true
+      Role: true,
+      cart: {
+        include: {
+          Product: {
+            include: {
+              productImages: true
+            }
+          }
+        }
+      },
+      orders: {
+        include: {
+          orderItem: {
+            include: {
+              Product: true
+            }
+          }
+        }
+      }
     }
   })
 }
