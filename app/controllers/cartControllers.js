@@ -67,7 +67,7 @@ const cartsController = {
   },
   deleteCart: async (req, res) => {
     try {
-      const { id } = req.body
+      const id = Number(req.params.id)
       const cart = await findCart(id)
       if (!cart) {
         return res.status(400).json({ message: "Cart doesn't exist" })
