@@ -1,36 +1,36 @@
 import { PrismaClient } from "@prisma/client"
+import fs from "fs"
+import path from "path"
 
 const prisma = new PrismaClient()
 
 const findCategoryId = async () => {
   const categoryData = await prisma.category.findMany()
-
-  const findCategoryId = categoryData.map((id) => {
-    return id.id
-  })
-
-  return findCategoryId
+  return categoryData.map((category) => category.id)
 }
 
 const main = async () => {
   try {
     const categoryIds = await findCategoryId()
+    const totalImages = 3 // Total number of images available
 
+    // Create dummy products
     const products = []
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= 20; i++) {
       const randomIndex = Math.floor(Math.random() * categoryIds.length)
       const categoryId = categoryIds[randomIndex]
+
+      // Create product
       const product = {
-        name: `Product ${i} `,
-        price: 10.99 + i,
-        description: `Description for Product ${i}`,
+        name: `Product ${i}`,
+        price: 1000000 + i,
+        description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
         quantity: 100,
-        categoryId: categoryId
+        categoryId: categoryId // Assign category to product
       }
       products.push(product)
     }
 
-    // Create products for each seller
     const productIds = []
     for (const product of products) {
       const createdProduct = await prisma.product.create({
@@ -39,27 +39,45 @@ const main = async () => {
       productIds.push(createdProduct.id)
     }
 
-    // Create product images using the extracted product IDs
-    const productImagesData = productIds
-      .map((productId) => {
-        return [
-          { imageUrl: `images/${productId}/1.jpg`, productId },
-          { imageUrl: `images/${productId}/2.jpg`, productId },
-          { imageUrl: `images/${productId}/3.jpg`, productId }
-        ]
-      })
-      .flat()
+    // Create product images data based on the product IDs and available images
+    const productImagesData = productIds.flatMap((productId) => {
+      const imagesForProduct = []
+      for (let i = 1; i <= totalImages; i++) {
+        const imageName = `image${i}.jpg`
+        const imageUrl = `${imageName}`
+        imagesForProduct.push({
+          imageUrl: imageUrl,
+          productId: productId
+        })
+      }
+      return imagesForProduct
+    })
 
+    // Create product images in the database
     await prisma.productImage.createMany({
       data: productImagesData
     })
 
-    console.log("Products and product images created successfully.")
+    if (!fs.existsSync("./public")) {
+      fs.mkdirSync("./public", { recursive: true })
+    }
+
+    for (let i = 1; i <= totalImages; i++) {
+      const imageName = `image${i}.jpg`
+      const sourceImagePath = path.join("database/imagesData", imageName) // Adjusted path
+      const targetImagePath = path.join("public", imageName)
+
+      // Copy image file
+      fs.copyFileSync(sourceImagePath, targetImagePath)
+    }
+
+    console.log("Dummy products and product images created successfully.")
   } catch (error) {
-    console.error("Error creating products and product images:", error)
+    console.error("Error creating dummy products and product images:", error)
   } finally {
     await prisma.$disconnect()
   }
 }
 
+// Call the main function
 main()
