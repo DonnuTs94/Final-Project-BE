@@ -67,7 +67,7 @@ const cartsController = {
   },
   deleteCart: async (req, res) => {
     try {
-      const { id } = req.body
+      const id = Number(req.params.id)
       const cart = await findCart(id)
       if (!cart) {
         return res.status(400).json({ message: "Cart doesn't exist" })
@@ -75,6 +75,7 @@ const cartsController = {
       const removeCart = await deleteCart(id)
       return res.status(200).json({ message: "Cart success to remove", removeCart })
     } catch (err) {
+      console.log(err)
       res.status(500).json({ message: "Failed to remove Cart" })
     }
   }
