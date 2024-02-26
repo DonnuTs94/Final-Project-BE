@@ -33,7 +33,7 @@ const findUserById = async (userId) => {
           }
         }
       },
-      order: {
+      orders: {
         include: {
           orderItem: {
             include: {
