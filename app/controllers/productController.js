@@ -77,7 +77,8 @@ const productController = {
         message: "Success get all product data!",
         data: productData,
         currentPage: pageNumber,
-        totalPages: totalPages
+        totalPages: totalPages,
+        totalItem: totalData
       })
     } catch (err) {
       return res.status(500).json({

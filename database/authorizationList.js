@@ -27,8 +27,10 @@ export const Permission = {
   BROWSE_ORDERS: "browse_orders",
   READ_ORDER: "read_order",
   ADD_ORDER: "add_order",
+  EDIT_STATUS_ORDER: "edit-status-order",
   ADMIN_BROWSE_ORDERS: "admin_browse_orders",
   ADMIN_READ_ORDER: "admin_read_orders",
+  ADMIN_EDIT_STATUS_ORDER: "admin_edit_status_order",
 
   ADD_IMAGE: "add_image",
   DELETE_IMAGE: "delete_image"
@@ -52,6 +54,7 @@ export const PermissionAssignment = {
 
     Permission.ADMIN_BROWSE_ORDERS,
     Permission.ADMIN_READ_ORDER,
+    Permission.ADMIN_EDIT_STATUS_ORDER,
 
     Permission.ADD_IMAGE,
     Permission.DELETE_IMAGE
@@ -73,6 +76,7 @@ export const PermissionAssignment = {
 
     Permission.BROWSE_ORDERS,
     Permission.READ_ORDER,
-    Permission.ADD_ORDER
+    Permission.ADD_ORDER,
+    Permission.EDIT_STATUS_ORDER
   ]
 }
