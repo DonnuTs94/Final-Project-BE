@@ -30,12 +30,17 @@ app.post("/webhook/midtrans", async (req, res) => {
     }
 
     if (transaction_status === "cancel" || transaction_status === "expire") {
-      const orderIdInt = parseInt(order_id)
-      if (!isNaN(orderIdInt)) {
-        await updateStatusOrder(orderIdInt, ORDER_STATUS.CANCELLED)
-        console.log("Order berhasil diperbarui:", orderIdInt)
-      } else {
-        console.log("Error: Format order_id tidak valid")
+      try {
+        const orderIdInt = parseInt(order_id)
+        if (!isNaN(orderIdInt)) {
+          await updateStatusOrder(orderIdInt, ORDER_STATUS.CANCELLED)
+          console.log("Order berhasil diperbarui:", orderIdInt)
+        } else {
+          console.log("Error: Format order_id tidak valid")
+        }
+      } catch (error) {
+        console.error("Error dalam memperbarui status pesanan:", error)
+        return res.status(500).json({ message: "Gagal memperbarui status pesanan" })
       }
     }
 
