@@ -3,7 +3,8 @@ import {
   getOrdersByUserId,
   getAllAdminOrders,
   getOrderById,
-  getOrderByIdAndUserId
+  getOrderByIdAndUserId,
+  updateStatusOrder
 } from "../services/orderServices.js"
 
 import { getCartsByCartIdAndUserId } from "../services/cartService.js"
@@ -177,6 +178,23 @@ const orderController = {
         order
       })
     } catch (err) {
+      res.status(500).json({
+        message: "Internal Server Error"
+      })
+    }
+  },
+  updateOrderStatus: async (req, res) => {
+    try {
+      const { orderId, status } = req.body
+
+      const order = await updateStatusOrder(orderId, status)
+
+      res.json({
+        message: "Success update order status!",
+        order
+      })
+    } catch (err) {
+      console.log(err)
       res.status(500).json({
         message: "Internal Server Error"
       })

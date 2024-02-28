@@ -43,4 +43,17 @@ router.get(
   orderController.getAdminOrderById
 )
 
+router.put(
+  "/admin/updateStatus",
+  validateToken,
+  authorizationPermission(Permission.ADMIN_EDIT_STATUS_ORDER),
+  orderController.updateOrderStatus
+)
+router.put(
+  "/updateStatus",
+  validateToken,
+  authorizationPermission(Permission.EDIT_STATUS_ORDER),
+  orderController.updateOrderStatus
+)
+
 export default router

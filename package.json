@@ -9,6 +9,7 @@
     "migrate": "npx prisma migrate dev",
     "seed": "node ./database/authorizationSeeder.js && node ./database/userSeeder.js && node ./database/categoriesSeeder.js && node ./database/productSeeder.js",
     "product": "node ./database/productSeeder.js",
+    "authorize": "node ./database/authorizationSeeder.js && node ./database/userSeeder.js",
     "format": "npx prettier --write ."
   },
   "keywords": [],
