@@ -3,7 +3,6 @@ import snap from "../config/snapMidtrans.js"
 import { findOrderById, updateStatusOrder } from "../services/orderServices.js"
 import { ORDER_STATUS } from "../constants/order.js"
 
-
 const paymentController = {
   createPayment: async (req, res) => {
     try {
@@ -27,12 +26,17 @@ const paymentController = {
 
       const { id, grandTotal } = order
 
+      const expiry = {
+        unit: "minute",
+        duration: 1
+      }
 
       const parameters = {
         transaction_details: {
           order_id: id,
           gross_amount: Math.round(grandTotal)
-        }
+        },
+        expiry: expiry
       }
 
       const transaction = await snap.createTransaction(parameters)
